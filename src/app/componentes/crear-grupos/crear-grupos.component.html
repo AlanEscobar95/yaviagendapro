@@ -1,0 +1,53 @@
+<div class="wrapper">
+    <div class="body">
+        <h1>Crear Grupos</h1>
+        <span class>TODOS LOS CAMPOS SON OBLIGATORIOS</span>
+        <form [formGroup]="crearGrupos" (ngSubmit)="registrarGrupo()">
+            <div class="form-floating mb-3">
+                <input type="nombre" class="form-control" formControlName="nombre" placeholder="Ejm: Juan Carlos">
+                <label>Nombre</label>
+                <span class="text-danger errorLabel" *ngIf="crearGrupos.get('nombre')?.hasError('required') && crearGrupos.get('nombre')?.touched">
+                    El <strong>nombre</strong> es requerido.
+                  </span>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="descripcion" class="form-control" formControlName="descripcion"
+                    placeholder="Ejm: Pérez Ramirez">
+                <label>Descripción</label>
+            </div>
+            
+            <div class="d-flex justify-content-start mb-3">
+                <button type="button" class="btn btn-primary" (click)="agregarCorreo()">Agregar Correo</button>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" formControlName="integrantes" placeholder="Escribe los correos de los integrantes aquí">
+                <label>Integrantes del grupo</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea class="form-control" rows="6"></textarea>
+                <label>Texto para visualizar</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" formControlName="fechaInicio" placeholder="Fecha de inicio">
+                <label>Fecha de inicio</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" formControlName="fechaFin" placeholder="Fecha de fin">
+                <label>Fecha de fin</label>
+            </div>
+
+            <!-- Botón para agregar correo -->
+            
+            
+            <!-- Botones Volver y Enviar -->
+            <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-secondary" routerLink="/lista-grupos">Volver</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>

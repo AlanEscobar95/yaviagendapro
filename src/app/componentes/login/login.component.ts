@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     private firebaseError: FirebaseErrorService) {
     this.loginUsuario = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required, Validators.maxLength(8)],
+      password: ['', Validators.required],
     })
   }
 
