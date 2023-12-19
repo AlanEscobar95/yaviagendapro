@@ -37,7 +37,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     AppRoutingModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule, // Agregado el módulo de Firestore
+    AngularFirestoreModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
   ],

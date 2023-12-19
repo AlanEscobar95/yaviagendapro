@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-
-import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+
 
 
 @Injectable({
@@ -10,17 +9,27 @@ import { Observable } from 'rxjs';
 })
 
 
-export class GruposService implements OnInit {
- /* grupos: Observable<any[]>;
+export class GruposService{
 
- constructor(private firestore: AngularFirestore) {
-    this.grupos = this.firestore.collection('grupos').valueChanges();
-  }*/
-constructor(private firestore: AngularFirestore){
-  /*registrarGrupo(grupos:any){
-    return this.firestore.collection('grupos').add(grupos))
-  }*/
-}
-  ngOnInit(): void {
+constructor(private firestore: AngularFirestore){}
+  registrarGrupo(grupo:any): Promise<any>{
+    return this.firestore.collection('grupos').add(grupo);
+  }
+
+  ConsultaGrupos(): Observable<any> {
+    return this.firestore.collection('grupos', ref => ref.orderBy('fechaIngreso', 'asc')).snapshotChanges();
+  }
+
+  EliminarGrupos(id: string): Promise<any>{
+    return this.firestore.collection('grupos').doc(id).delete();
+  }
+
+  getGrupo(id: string): Observable<any>{
+    return this.firestore.collection('grupos').doc(id).snapshotChanges();
+  }
+
+  actualizarGrupo(id: string, data: any): Promise<any>{
+    return this.firestore.collection('grupos').doc(id).update(data);
   }
 }
+  

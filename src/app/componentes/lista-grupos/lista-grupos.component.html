@@ -1,50 +1,42 @@
- <div class="container">
-        <div class="card">
-            <div class="card-body">
-                <span class="h3"> Lista de Grupos </span>
-                <button class= "btn btn-dark btn-lg float-right" routerLink="/crear-grupos"> + Crear </button>
-                <table class="table mt-5 table-striped">
-                        <thead>
-                          <tr>
-                            <th>N°</th>
-                            <th>Nombre Grupo</th>
-                            <th>Descripción Grupo</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
-                            <th>Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>
-                                <i class="fas fa-edit fa-lg text-info mr-2"></i>
-                                <i class="fas fa-trash-alt fa-lg text-danger"></i>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td scope="row">2</td>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                          </tr>
-                        </tbody>
-                </table>
-                <table>
-                <ul>
-                  <li class="text" *ngFor="let grupo of grupos | async">
-                    {{grupo.nombre}}
-                  </li>
-                </ul>
-              </table>
-            </div>
-        </div>
- </div>
+<div class="fondo">
+
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <span class="h3"> Lista de Grupos </span>
+      <button class="btn btn-dark btn-lg float-right" routerLink="/crear-grupos"> + Crear </button>
+      <table class="table mt-5 table-striped">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Nombre Grupo</th>
+            <th>Descripción Grupo</th>
+            <th>Integrantes</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr *ngFor="let grupo of grupos">
+            <td></td>
+            <td>{{ grupo.nombre }}</td>
+            <td>{{ grupo.descripcion }}</td>
+            <td>{{ grupo.integrantes }}</td>
+            <td>{{ grupo.fechaInicio }}</td>
+            <td>{{ grupo.fechaFin }}</td>
+            <td>
+              <i class="fas fa-edit fa-lg text-info mr-2" [routerLink]="['/editarGrupos/', grupo.id]"></i>
+              <i (click)="deleteGrupo(grupo.id)" class="fas fa-trash-alt fa-lg text-danger"></i>
+            </td>
+          </tr>
+         
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+

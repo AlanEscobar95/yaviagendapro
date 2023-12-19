@@ -25,7 +25,7 @@ export class RecuperarPasswordComponent implements OnInit {
   ngOnInit(): void { }
 
   recuperar() {
-    const email = this.recuperarUsuario.value.correo;
+    const email = this.recuperarUsuario.value.email;
     this.loading = true;
     this.afAuth.sendPasswordResetEmail(email).then(() => {
       this.toastr.success('Se ha enviado un correo para restablecer la contraseña', 'Correo enviado');

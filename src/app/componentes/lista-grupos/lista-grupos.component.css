@@ -1,3 +1,11 @@
 i{
     cursor: pointer;
 }
+
+.fondo {
+    background-image: url('../../../assets/img/fondo.jpg'); /* Reemplaza 'ruta-de-tu-imagen-de-fondo.jpg' con la ruta correcta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Ajusta la altura según sea necesario */
+  }

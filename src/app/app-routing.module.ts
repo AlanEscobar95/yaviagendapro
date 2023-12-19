@@ -16,6 +16,8 @@ const routes: Routes = [
   {path:'verificar-correo', component: VerificarCorreoComponent},
   {path:'home', component: HomeComponent},
   {path:'lista-grupos', component: ListaGruposComponent },
+  {path:'crear-grupos', component: CrearGruposComponent },
+  {path:'editarGrupos/:id', component: CrearGruposComponent },
   {path:'**', redirectTo: 'login', pathMatch:'full'},
 
 ];

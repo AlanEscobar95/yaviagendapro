@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { GruposService } from 'src/app/servicios/grupos.service';
 
 @Component({
   selector: 'app-lista-grupos',
@@ -8,13 +10,38 @@ import { Observable } from 'rxjs';
   styleUrls: ['./lista-grupos.component.css']
 })
 export class ListaGruposComponent implements OnInit {
-  grupos: Observable<any[]>;
+  
+  grupos: any[] = [];
 
-  constructor(firestore: AngularFirestore) {
-    this.grupos = firestore.collection('grupos').valueChanges();
+  constructor(private _gruposService: GruposService,
+              private toastr: ToastrService) {
+    
   }
 
   ngOnInit(): void {
-    // Lógica de inicialización si es necesaria
+    this.getGrupos()
   }
+
+  getGrupos(){
+    this._gruposService.ConsultaGrupos().subscribe(data =>{
+      this.grupos = [];
+      data.forEach((element: any) => {
+        this.grupos.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data()
+        })
+      });
+
+    })
+  }
+
+deleteGrupo(id: string){
+  this._gruposService.EliminarGrupos(id).then (() => {
+    this.toastr.error('El Grupo fue eliminado con éxito', 'Registro Eliminado')
+  }).catch(error => {
+
+  })
+}
+
+
 }
