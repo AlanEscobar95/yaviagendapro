@@ -71,7 +71,7 @@ export class CrearGruposComponent implements OnInit {
     });
   }
   
-  editarGrupo(id: string){
+  editarGrupo(id: string) {
     const grupo: any = {
       nombre: this.crearGrupos.value.nombre,
       descripcion: this.crearGrupos.value.descripcion,
@@ -80,9 +80,9 @@ export class CrearGruposComponent implements OnInit {
       fechaFin: this.crearGrupos.value.fechaFin,
       fechaModificacion: new Date()
     };
-
-   this.loading = true;
-    this._gruposService.actualizarGrupo(id, this.crearGrupos.value).then(() => {
+  
+    this.loading = true;
+    this._gruposService.actualizarGrupo(id, grupo).then(() => {
       this.loading = false;
       this.toastr.info('El grupo fue modificado con éxito', 'Grupo Modificado');
       this.router.navigate(['/lista-grupos']);
@@ -92,23 +92,26 @@ export class CrearGruposComponent implements OnInit {
     });
   }
 
-  editar(){
+  editar() {
     this.textoVisualizar = 'Editar Grupo';
-    if(this.id !== null){
+    if (this.id !== null) {
       this.loading = true;
-      this._gruposService.getGrupo(this.id).subscribe(data =>{
+      this._gruposService.getGrupo(this.id).subscribe(data => {
         this.loading = false;
-        this.crearGrupos.setValue({
+        const integrantes = data.payload.data()['integrantes'];
+        this.correosIntegrantes = integrantes ? [...integrantes] : [];
+        this.crearGrupos.patchValue({
           nombre: data.payload.data()['nombre'],
           descripcion: data.payload.data()['descripcion'],
           integrantes: '',
           fechaInicio: data.payload.data()['fechaInicio'],
           fechaFin: data.payload.data()['fechaFin'],
           textoVisualizar: ''
-        })
-      })
+        });
+      });
     }
   }
+  
 
   agregarCorreo() {
     const integrantesControl = this.crearGrupos.get('integrantes');

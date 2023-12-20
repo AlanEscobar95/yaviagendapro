@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { FirebaseErrorService } from 'src/app/servicios/firebase-error.service';
 @Component({
   selector: 'app-registro',
-  templateUrl: './registro.component.html'
+  templateUrl: './registro.component.html',
+  styleUrls: ['./registro.component.css']
 
 })
 
@@ -20,11 +21,11 @@ export class RegistroComponent implements OnInit {
     private router: Router,
     private firebaseError: FirebaseErrorService) {
     this.registrarUsuario = this.fb.group({
-      nombre: ['', [Validators.required,Validators.maxLength(50)]],
-      apellido: ['',[Validators.required,Validators.maxLength(50)]],
+      nombre: ['', [Validators.required,Validators.maxLength(25),  Validators.pattern('[a-zA-Z ]*')]],
+      apellido: ['',[Validators.required,Validators.maxLength(25),  Validators.pattern('[a-zA-Z ]*')]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required, Validators.maxLength(8)],
-      password2: ['', Validators.required]
+      password: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(16),Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9_@./#&+-]*$')]],
+      password2: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(16),Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9_@./#&+-]*$')]]
     });
   }
   ngOnInit(): void {
@@ -57,7 +58,7 @@ verificarCorreo () {
   this.afAuth.currentUser.then(user => user?.sendEmailVerification())
   .then(() => {
     this.router.navigate(['/login']);
-    this.toastr.info('Le enviamos un correo electrónico para su verificación', 'Verificar corre');
+    this.toastr.info('Le enviamos un correo electrónico para su verificación', 'Verificar correo');
   });
 }
 

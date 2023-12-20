@@ -1,22 +1,24 @@
 <div class="wrapper">
-    <div *ngIf ="!loading" class="body">
+  <div *ngIf ="!loading" class="card">
+
+    <div  class="card-body">
         <img class="logo" src="../../../assets/img/login.png" alt="Login">
         <h1>Registrarse</h1>
         <form (ngSubmit)="registrar()" [formGroup]="registrarUsuario">
-            <div class="form-floating mb-3">
-                <input type="nombres" class="form-control" formControlName= "nombre"  placeholder="Ejm: Juan Carlos">
-                <label >Nombres</label>
-                <span class="text-danger errorLabel" *ngIf="registrarUsuario.get('nombre')?.hasError('required') && registrarUsuario.get('nombre')?.touched">
-                  El <strong>nombre</strong> es requerido.
-                </span>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="apellidos" class="form-control" formControlName= "apellido" placeholder="Ejm: Pérez Ramirez">
-                <label >Apellidos</label>
-                <span class="text-danger errorLabel" *ngIf="registrarUsuario.get('apellido')?.hasError('required') && registrarUsuario.get('apellido')?.touched">
-                  El <strong>apellido</strong> es requerido.
-                </span>
-              </div>
+          <div class="form-floating mb-3">
+            <input type="nombres" class="form-control" formControlName= "nombre"  placeholder="Ejm: Juan Carlos" pattern="[a-zA-Z ]*" required>
+            <label >Nombres</label>
+            <span class="text-danger errorLabel" *ngIf="registrarUsuario.get('nombre')?.hasError('required') && registrarUsuario.get('nombre')?.touched">
+              El <strong>nombre</strong> es requerido.
+            </span>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="apellidos" class="form-control" formControlName= "apellido" placeholder="Ejm: Pérez Ramirez" pattern="[a-zA-Z ]*" required>
+            <label >Apellidos</label>
+            <span class="text-danger errorLabel" *ngIf="registrarUsuario.get('apellido')?.hasError('required') && registrarUsuario.get('apellido')?.touched">
+              El <strong>apellido</strong> es requerido.
+            </span>
+          </div>
               <div class="form-floating mb-3">
                 <input type="email" class="form-control" formControlName= "email" placeholder="name@example.com">
                 <label >Correo electrónico</label>
@@ -32,18 +34,15 @@
                 <label >Contraseña</label>
                 <span class="text-danger errorLabel" *ngIf="registrarUsuario.get('password')?.hasError('required') && registrarUsuario.get('password')?.touched">
                   La <strong>contraseña</strong> es requerida.
-                </span>
-                <span class="text-danger errorLabel" *ngIf="registrarUsuario.get('password')?.hasError('minlength') && registrarUsuario.get('password')?.touched">
-                  La <strong>contraseña</strong> debe contener minimo 8 caracteres.
-                </span>
+                </span>               
               </div>
              
               <div class="form-floating mb-3">
                 <input type="password" class="form-control" formControlName= "password2" placeholder="Repetir Contraseña">
-                <label >Repertir Contraseña</label>
+                <label >Repetir Contraseña</label>
                 <span class="text-danger errorLabel" *ngIf="registrarUsuario.get('password2')?.hasError('required') && registrarUsuario.get('password2')?.touched">
                   Es necesario <strong>que repita</strong> la contraseña.
-                </span>
+                </span>   
               </div>
               <div class="d-grid gap-2 mb-3">
               <button class="btn btn-primary btn-lg" [disabled]="registrarUsuario.invalid" type ="submit">Aceptar</button>
@@ -51,5 +50,6 @@
               <a class="mt-3" routerLink="/login">Volver</a>
         </form>
     </div>
+  </div>
     <app-spinner *ngIf="loading"></app-spinner>
 </div>

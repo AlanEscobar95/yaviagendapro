@@ -1,0 +1,25 @@
+.wrapper {
+    background-image: url('../../../assets/img/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px; 
+    width: 100%;
+    padding: 20px;
+    margin: 20px;
+}
+
+.card-body {
+    text-align: center; 
+}
+

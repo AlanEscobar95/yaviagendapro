@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./verificar-correo.component.css']
 })
 export class VerificarCorreoComponent {
-
+  
 }

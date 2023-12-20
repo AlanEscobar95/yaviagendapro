@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     private firebaseError: FirebaseErrorService) {
     this.loginUsuario = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', Validators.required,],
     })
   }
 
