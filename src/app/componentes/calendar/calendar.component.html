@@ -1,0 +1,30 @@
+<app-navbar></app-navbar>
+
+<div class="calendar">
+    <div class="header">
+      <button (click)="goToPreviousMonth()">Anterior</button>
+      <h2>{{ currentMonth | date: 'MMMM y' }}</h2>
+      <button (click)="goToNextMonth()">Siguiente</button>
+    </div>
+  
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let day of daysOfWeek">{{ day }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let week of weeks">
+          <td *ngFor="let day of week">
+            <div class="day" (click)="showEventsForDay(day)">
+              <span class="date">{{ day.date | date: 'd' }}</span>
+              <div *ngFor="let event of day.events" class="event">
+                {{ event.title }}
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -1,69 +1,97 @@
 <app-navbar></app-navbar>
 <div class="wrapper">
-    <div *ngIf="!loading" class="body">
-        <h1>{{textoVisualizar}}</h1>
-        <span *ngIf="enviado && crearGrupos.invalid">TODOS LOS CAMPOS SON OBLIGATORIOS</span>
-        <form [formGroup]="crearGrupos" (ngSubmit)="agregarEditarGrupo()">
-            <div class="form-floating mb-3">
-                <input type="nombre" class="form-control" formControlName="nombre" placeholder="Ejm: Juan Carlos">
-                <label>Nombre</label>
-                <span class="text-danger errorLabel" *ngIf="crearGrupos.get('nombre')?.hasError('required') && crearGrupos.get('nombre')?.touched">
-                    El <strong>nombre</strong> es obligatorio.
-                  </span>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="descripcion" class="form-control" formControlName="descripcion"
-                    placeholder="Ejm: Pérez Ramirez">
-                <label>Descripción</label>
-                <span class="text-danger errorLabel" *ngIf="crearGrupos.get('descripcion')?.hasError('required') && crearGrupos.get('descripcion')?.touched">
-                    La<strong>descripcion</strong> es obligatoria.
-                  </span>
-            </div>
-            
-            <div class="d-flex justify-content-start mb-3">
-                <button type="button" class="btn btn-primary" (click)="agregarCorreo()">Agregar Correo</button>
-              </div>
-              
-              <div class="form-floating mb-3">
-                <input type="email" class="form-control" formControlName="integrantes" placeholder="Escribe los correos de los integrantes aquí">
-                <label>Integrantes del grupo</label>
-                <span class="text-danger errorLabel" *ngIf="crearGrupos.get('integrantes')?.hasError('required') && crearGrupos.get('integrantes')?.touched">
-                  Debe <strong>existir al menos </strong> un integrante.
-                </span>
-              </div>
-              
-              <div class="form-floating mb-3">
-                <div class="correos-container">
-                  <div *ngFor="let correo of correosIntegrantes" class="correo-etiqueta">
-                    <span>{{ correo }}</span>
-                    <button type="button" class="btn btn-link" (click)="eliminarCorreo(correo)">x</button>
-                  </div>
-                </div>
-              </div>
-              
-            <div class="form-floating mb-3">
-                <input type="date" class="form-control" formControlName="fechaInicio" placeholder="Fecha de inicio">
-                <label>Fecha de inicio</label>
-                <span class="text-danger errorLabel" *ngIf="crearGrupos.get('fechaInicio')?.hasError('required') && crearGrupos.get('fechaInicio')?.touched">
-                    La<strong>fecha de inicio</strong> es obligatoria.
-                  </span>
-            </div>
 
-            <div class="form-floating mb-3">
-                <input type="date" class="form-control" formControlName="fechaFin" placeholder="Fecha de fin">
-                <label>Fecha de fin</label>
-                <span class="text-danger errorLabel" *ngIf="crearGrupos.get('fechaFin')?.hasError('required') && crearGrupos.get('fechaFin')?.touched">
-                    La<strong>fecha de finalizacion</strong> es obligatoria.
-                  </span>
-            </div>
-            
-            <!-- Botones Volver y Enviar -->
-            <div class="d-flex justify-content-between mt-3">
-                <button class="btn btn-secondary" routerLink="/lista-grupos">Volver</button>
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
-        </form>
-    </div>
-    <!-- Section: Design Block -->
-    <app-spinner *ngIf="loading"></app-spinner>
+ <div *ngIf="!loading" class="card">
+      <div  class="card-body">
+            <h1>{{tituloFormulario}}</h1>
+    <span *ngIf="enviado && (crearGrupos.invalid && !crearGrupos.get('integrantes')?.hasError('required'))">
+      TODOS LOS CAMPOS SON OBLIGATORIOS
+    </span>
+    <form [formGroup]="crearGrupos" (ngSubmit)="agregarEditarGrupo()">
+      <div class="form-floating mb-3">
+        <input type="nombre" class="form-control" formControlName="nombre" placeholder="Ejm: Juan Carlos">
+        <label>Nombre</label>
+        <span class="text-danger errorLabel"
+          *ngIf="crearGrupos.get('nombre')?.hasError('required') && crearGrupos.get('nombre')?.touched">
+          El <strong>nombre</strong> es obligatorio.
+        </span>
+        <span class="text-danger errorLabel"
+          *ngIf="crearGrupos.get('nombre')?.hasError('pattern') && crearGrupos.get('nombre')?.touched">
+          El <strong>nombre</strong> no puede contener números.
+        </span>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="descripcion" class="form-control" formControlName="descripcion" placeholder="Ejm: Pérez Ramirez">
+        <label>Descripción</label>
+        <span class="text-danger errorLabel"
+          *ngIf="crearGrupos.get('descripcion')?.hasError('required') && crearGrupos.get('descripcion')?.touched">
+          La <strong>descripcion</strong> es obligatoria.
+        </span>
+        <span class="text-danger errorLabel"
+          *ngIf="crearGrupos.get('descripcion')?.hasError('maxlength') && crearGrupos.get('descripcion')?.touched">
+          La <strong>descripcion</strong> no puede tener más de 255 caracteres.
+        </span>
+      </div>
+
+      <div class="d-flex justify-content-start mb-3">
+        <button type="button" class="btn btn-primary" (click)="agregarCorreo()">Agregar Correo</button>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control" formControlName="integrantes"
+          placeholder="Escribe los correos de los integrantes aquí">
+        <label>Integrantes del grupo</label>
+        <span class="text-danger errorLabel"
+          *ngIf="crearGrupos.get('integrantes')?.hasError('required') && crearGrupos.get('integrantes')?.touched && !crearGrupos.get('integrantes')?.value.trim()">
+          Debe <strong>existir al menos </strong> un integrante.
+        </span>
+      </div>
+
+      <div class="form-floating mb-3">
+        <div class="correos-container">
+          <div *ngFor="let correo of correosIntegrantes" class="correo-etiqueta">
+            <span>{{ correo }}</span>
+            <button type="button" class="btn btn-link" (click)="eliminarCorreo(correo)">x</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="date" class="form-control" formControlName="fechaInicio" placeholder="Fecha de inicio">
+        <label>Fecha de inicio</label>
+        <span class="text-danger errorLabel"
+          *ngIf="crearGrupos.get('fechaInicio')?.hasError('required') && crearGrupos.get('fechaInicio')?.touched">
+          La <strong>fecha de inicio</strong> es obligatoria.
+        </span>
+        <span class="text-danger errorLabel"
+          *ngIf="crearGrupos.get('fechaInicio')?.hasError('fechaInvalida') && crearGrupos.get('fechaInicio')?.touched">
+          La <strong>fecha de inicio</strong> no puede ser menor a la actual.
+        </span>
+      </div>
+
+
+      <div class="form-floating mb-3">
+        <input type="date" class="form-control" formControlName="fechaFin" placeholder="Fecha de fin">
+        <label>Fecha de fin</label>
+        <span class="text-danger errorLabel"
+          *ngIf="crearGrupos.get('fechaFin')?.hasError('required') && crearGrupos.get('fechaFin')?.touched">
+          La <strong>fecha de finalizacion</strong> es obligatoria.
+        </span>
+        <span class="text-danger errorLabel"
+          *ngIf="crearGrupos.get('fechaFin')?.hasError('fechaInvalida') && crearGrupos.get('fechaFin')?.touched">
+          La <strong>fecha de finalizacion</strong> no puede ser menor a la actual.
+        </span>
+      </div>
+
+      <!-- Botones Volver y Enviar -->
+      <div class="d-flex justify-content-between mt-3">
+        <button class="btn btn-danger" routerLink="/lista-grupos">Volver</button>
+        <button type="submit" class="btn btn-success" formControlName="enviarButton" [disabled]="crearGrupos.invalid">Enviar</button>
+      </div>
+    </form>
+  </div>
+</div>
+  <!-- Section: Design Block -->
+  <app-spinner *ngIf="loading"></app-spinner>
 </div>

@@ -7,6 +7,7 @@ import { VerificarCorreoComponent } from './componentes/verificar-correo/verific
 import { HomeComponent } from './componentes/home/home.component';
 import { CrearGruposComponent } from './componentes/crear-grupos/crear-grupos.component';
 import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.component';
+import { CalendarComponent } from './componentes/calendar/calendar.component';
 
 const routes: Routes = [
   {path:'', redirectTo: 'login', pathMatch: 'full'},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path:'lista-grupos', component: ListaGruposComponent },
   {path:'crear-grupos', component: CrearGruposComponent },
   {path:'editarGrupos/:id', component: CrearGruposComponent },
+  {path:'calendar', component: CalendarComponent },
   {path:'**', redirectTo: 'login', pathMatch:'full'},
 
 ];

@@ -1,19 +1,21 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-          <a class="nav-link" href="#">Features</a>
-          <a class="nav-link" href="#">Pricing</a>
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </div>
-        <div class="col-md-3 text-end">
-            <button class="btn btn-outline-primary me-2" type="button" (click)="logOut()">LogOut</button>
-        </div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary ">
+  <div class="container-fluid">
+    <a class="navbar-brand mr-4" href="#">
+      <img src="../../assets/img/LogoAgenda.jpeg" width="100px" height="100px" class="d-inline-block align-top" alt="Logo">
+    </a>
+    
+    <a class="navbar-brand" routerLink="/home" >Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" routerLink="/calendar">Calendario</a>
+        <a class="nav-link" routerLink="/lista-grupos">Grupos</a>
+      </div>
+      <div class="col-md-8 text-end">
+          <button class="btn btn-outline-danger me-2" type="button" (click)="logOut()">Cerrar Sesion</button>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>

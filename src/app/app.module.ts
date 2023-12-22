@@ -18,6 +18,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.component';
 import { CrearGruposComponent } from './componentes/crear-grupos/crear-grupos.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { CalendarComponent } from './componentes/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     SpinnerComponent,
     ListaGruposComponent,
     CrearGruposComponent,
+    CalendarComponent,
     NavbarComponent
   ],
   imports: [

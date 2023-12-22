@@ -46,4 +46,10 @@ export class LoginComponent implements OnInit {
       this.toastr.error(this.firebaseError.codeError(error.code), 'Error');
     })
   }
+ 
+  passwordVisible: boolean = false;
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GruposService } from 'src/app/servicios/grupos.service';
+
 
 @Component({
   selector: 'app-crear-grupos',
@@ -15,41 +16,73 @@ export class CrearGruposComponent implements OnInit {
   correosIntegrantes: string[] = [];
   loading: boolean = false;
   id: string | null;
-  textoVisualizar = 'Crear Grupo';
+  tituloFormulario: string = 'Crear Grupo';
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private _gruposService: GruposService,
     private router: Router,
     private toastr: ToastrService,
-    private aRoute: ActivatedRoute) {
+    private aRoute: ActivatedRoute
+  ) {
     this.crearGrupos = this.fb.group({
-      nombre: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      integrantes: ['', Validators.required],
-      fechaInicio: ['', Validators.required],
-      fechaFin: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('^[a-zA-Z ]*$')]],
+      descripcion: ['', [Validators.required, Validators.maxLength(255)]],
+      integrantes: ['', [Validators.required, Validators.email]],
+      fechaInicio: ['', [Validators.required, this.fechaInicioValidator.bind(this)]],
+      fechaFin: ['', [Validators.required, this.fechaFinValidator.bind(this)]],
+      enviarButton: [{ value: null, disabled: true }],
       textoVisualizar: ['']
     });
     this.id = this.aRoute.snapshot.paramMap.get('id');
+    
   }
 
   ngOnInit(): void {
     this.editar();
+    this.verificarIntegrantes();
+  }
+
+  fechaInicioValidator(control: AbstractControl): ValidationErrors | null {
+    const fechaInicio = new Date(control.value);
+    const fechaActual = new Date();
+    return fechaInicio >= fechaActual ? null : { fechaInvalida: true };
+  }
+
+  fechaFinValidator(control: AbstractControl): ValidationErrors | null {
+    const fechaFin = new Date(control.value);
+    const fechaActual = new Date();
+    return fechaFin >= fechaActual ? null : { fechaInvalida: true };
   }
 
   agregarEditarGrupo() {
     this.enviado = true;
-    if (this.crearGrupos.invalid) {
+  
+    if (this.id === null) {
+      if (this.crearGrupos.invalid) {
+        return;
+      }
+  
+      if (this.correosIntegrantes.length === 0) {
+        this.toastr.error('Debe existir al menos un integrante', 'Error');
+        return;
+      }
+    }
+  
+    if (this.id === null && this.correosIntegrantes.length === 0) {
+      this.toastr.error('Debe existir al menos un integrante', 'Error');
       return;
     }
+  
     if (this.id === null) {
       this.registrarGrupo();
     } else {
       this.editarGrupo(this.id);
     }
   }
+  
 
-  registrarGrupo(){
+  registrarGrupo() {
     const grupo: any = {
       nombre: this.crearGrupos.value.nombre,
       descripcion: this.crearGrupos.value.descripcion,
@@ -59,17 +92,21 @@ export class CrearGruposComponent implements OnInit {
       fechaIngreso: new Date(),
       fechaModificacion: new Date()
     };
-    
+  
     this.loading = true;
-    this._gruposService.registrarGrupo(grupo).then(() => {
-      this.toastr.success('Grupo registrado con éxito');
-      this.loading = false;
-      this.router.navigate(['/lista-grupos']);
-    }).catch(error => {
-      console.log(error);
-      this.loading = false;
-    });
+  
+    this._gruposService.registrarGrupo(grupo)
+      .then(() => {
+        this.toastr.success('Grupo registrado con éxito');
+        this.loading = false;
+        this.router.navigate(['/lista-grupos']);
+      })
+      .catch(error => {
+        console.error(error);
+        this.loading = false;
+      });
   }
+  
   
   editarGrupo(id: string) {
     const grupo: any = {
@@ -81,6 +118,11 @@ export class CrearGruposComponent implements OnInit {
       fechaModificacion: new Date()
     };
   
+    if (this.correosIntegrantes.length === 0) {
+      this.toastr.error('Debe existir al menos un integrante', 'Error');
+      return;
+    }
+  
     this.loading = true;
     this._gruposService.actualizarGrupo(id, grupo).then(() => {
       this.loading = false;
@@ -91,47 +133,72 @@ export class CrearGruposComponent implements OnInit {
       this.loading = false;
     });
   }
-
-  editar() {
-    this.textoVisualizar = 'Editar Grupo';
-    if (this.id !== null) {
-      this.loading = true;
-      this._gruposService.getGrupo(this.id).subscribe(data => {
-        this.loading = false;
-        const integrantes = data.payload.data()['integrantes'];
-        this.correosIntegrantes = integrantes ? [...integrantes] : [];
-        this.crearGrupos.patchValue({
-          nombre: data.payload.data()['nombre'],
-          descripcion: data.payload.data()['descripcion'],
-          integrantes: '',
-          fechaInicio: data.payload.data()['fechaInicio'],
-          fechaFin: data.payload.data()['fechaFin'],
-          textoVisualizar: ''
+  
+    editar() {
+      if (this.id !== null) {
+        this.loading = true;
+        this._gruposService.getGrupo(this.id).subscribe(data => {
+          this.loading = false;
+          const integrantes = data.payload.data()['integrantes'];
+          this.correosIntegrantes = integrantes ? [...integrantes] : [];
+          this.crearGrupos.patchValue({
+            nombre: data.payload.data()['nombre'],
+            descripcion: data.payload.data()['descripcion'],
+            integrantes: '',
+            fechaInicio: data.payload.data()['fechaInicio'],
+            fechaFin: data.payload.data()['fechaFin'],
+            textoVisualizar: ''
+          });
+    
+          this.tituloFormulario = 'Editar Grupo';
         });
-      });
-    }
+      }
   }
   
 
-  agregarCorreo() {
-    const integrantesControl = this.crearGrupos.get('integrantes');
-    if (integrantesControl && integrantesControl.valid) {
-      const nuevoCorreo = integrantesControl.value;
-      this.correosIntegrantes.push(nuevoCorreo);
-      this.actualizarTextoVisualizar();
-      integrantesControl.setValue('');
-      integrantesControl.setErrors(null);
-    }
-  }
+    agregarCorreo() {
+      const integrantesControl = this.crearGrupos.get('integrantes');
+      if (integrantesControl && integrantesControl.valid && integrantesControl.value.trim() !== '') {
+        const nuevoCorreo = integrantesControl.value;
+        this.correosIntegrantes.push(nuevoCorreo);
+        this.actualizarTextoVisualizar();
+        
+        // Establecer el campo como no tocado
+        integrantesControl.markAsUntouched();
+    
+        // Limpiar el valor
+        integrantesControl.setValue('');
+        integrantesControl.setErrors(null);
+      } else {
+        this.toastr.error('Debe ingresar un correo electrónico válido', 'Error');
+      }
+      this.verificarIntegrantes();
+    }    
 
 
   eliminarCorreo(correo: string) {
     this.correosIntegrantes = this.correosIntegrantes.filter(c => c !== correo);
     this.actualizarTextoVisualizar();
+    this.verificarIntegrantes();
   }
 
-  private actualizarTextoVisualizar() {
+  actualizarTextoVisualizar() {
     const textoVisualizar = this.correosIntegrantes.join('\n');
     this.crearGrupos.get('textoVisualizar')?.setValue(textoVisualizar);
   }
+
+  verificarIntegrantes() {
+    if (this.id !== null) {
+      return;
+    }
+  
+    const integrantesControl = this.crearGrupos.get('integrantes');
+    const enviarButton = this.crearGrupos.get('enviarButton');
+  
+    if (integrantesControl && enviarButton) {
+      const integrantesNoVacios = integrantesControl.value.trim() !== '';
+      enviarButton[ integrantesNoVacios ? 'enable' : 'disable' ]();
+    }
+  }
+  
 }

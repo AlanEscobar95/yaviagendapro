@@ -1,25 +1,45 @@
 .rounded-t-5 {
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+@media (min-width: 992px) {
+  .rounded-tr-lg-0 {
+    border-top-right-radius: 0;
   }
 
-  @media (min-width: 992px) {
-    .rounded-tr-lg-0 {
-      border-top-right-radius: 0;
-    }
-
-    .rounded-bl-lg-5 {
-      border-bottom-left-radius: 0.5rem;
-    }
+  .rounded-bl-lg-5 {
+    border-bottom-left-radius: 0.5rem;
   }
-  .wrapper {
-  background-image: url('../../../assets/img/fondo.jpg'); /* Reemplaza 'ruta-de-tu-imagen-de-fondo.jpg' con la ruta correcta de tu imagen */
+}
+
+.wrapper {
+  background-image: url('../../../assets/img/fondo.jpg');
+  /* Reemplaza 'ruta-de-tu-imagen-de-fondo.jpg' con la ruta correcta de tu imagen */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh; /* Ajusta la altura según sea necesario */
+  height: 100vh;
+  /* Ajusta la altura según sea necesario */
 }
 
 .card {
-  background-color: rgba(255, 255, 255, 0.9); /* Cambia el color de fondo de la tarjeta según sea necesario */
+  background-color: rgba(255, 255, 255, 0.9);
+  /* Cambia el color de fondo de la tarjeta según sea necesario */
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
 }

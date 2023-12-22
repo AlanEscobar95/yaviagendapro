@@ -14,18 +14,22 @@ import { FirebaseErrorService } from 'src/app/servicios/firebase-error.service';
 export class RegistroComponent implements OnInit {
   registrarUsuario: FormGroup;
   loading: boolean = false;
+  passwordVisible = {
+    password: false,
+    password2: false
+  };
 
   constructor(private fb: FormBuilder,
     private afAuth: AngularFireAuth,
-    private toastr: ToastrService, 
+    private toastr: ToastrService,
     private router: Router,
     private firebaseError: FirebaseErrorService) {
     this.registrarUsuario = this.fb.group({
-      nombre: ['', [Validators.required,Validators.maxLength(25),  Validators.pattern('[a-zA-Z ]*')]],
-      apellido: ['',[Validators.required,Validators.maxLength(25),  Validators.pattern('[a-zA-Z ]*')]],
+      nombre: ['', [Validators.required, Validators.minLength(25), Validators.pattern('[a-zA-Z ]*')]],
+      apellido: ['', [Validators.required, Validators.minLength(25), Validators.pattern('[a-zA-Z ]*')]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(16),Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9_@./#&+-]*$')]],
-      password2: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(16),Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9_@./#&+-]*$')]]
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16), Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9_@./#&+-]*$')]],
+      password2: ['', [Validators.required]]
     });
   }
   ngOnInit(): void {
@@ -49,18 +53,21 @@ export class RegistroComponent implements OnInit {
 
     }).catch((error) => {
       this.loading = false;
-      this.toastr.error(this.firebaseError.codeError(error.code),'Error');
+      this.toastr.error(this.firebaseError.codeError(error.code), 'Error');
     })
   }
-  
 
-verificarCorreo () {
-  this.afAuth.currentUser.then(user => user?.sendEmailVerification())
-  .then(() => {
-    this.router.navigate(['/login']);
-    this.toastr.info('Le enviamos un correo electrónico para su verificación', 'Verificar correo');
-  });
-}
 
+  verificarCorreo() {
+    this.afAuth.currentUser.then(user => user?.sendEmailVerification())
+      .then(() => {
+        this.router.navigate(['/login']);
+        this.toastr.info('Le enviamos un correo electrónico para su verificación', 'Verificar correo');
+      });
   }
+ 
+  togglePasswordVisibility(field: 'password' | 'password2') {
+    this.passwordVisible[field] = !this.passwordVisible[field];
+  }
+}
 

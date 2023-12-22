@@ -1,13 +1,17 @@
-<div class="fondo">
-
 <app-navbar></app-navbar>
+<br>
+<div class="fondo">
 <div class="container">
   <div class="card">
     <div class="card-body">
-      <span class="h3"> Lista de Grupos </span>
-      <button class="btn btn-dark btn-lg float-right" routerLink="/crear-grupos"> + Crear </button>
+      <div class="text-center">
+        <h3> Lista de Grupos </h3>
+        </div>
       <table class="table mt-5 table-striped">
         <thead>
+          <tr >
+            <button class="btn btn-success btn-lg " routerLink="/crear-grupos"> + Crear </button>
+          </tr>
           <tr>
             <th>N°</th>
             <th>Nombre Grupo</th>
@@ -19,8 +23,8 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr *ngFor="let grupo of grupos">
-            <td></td>
+          <tr *ngFor="let grupo of grupos; let i = index">
+            <td>{{ i + 1 }}</td>
             <td>{{ grupo.nombre }}</td>
             <td>{{ grupo.descripcion }}</td>
             <td>{{ grupo.integrantes }}</td>
