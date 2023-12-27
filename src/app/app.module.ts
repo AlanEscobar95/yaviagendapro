@@ -19,6 +19,8 @@ import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.co
 import { CrearGruposComponent } from './componentes/crear-grupos/crear-grupos.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CalendarComponent } from './componentes/calendar/calendar.component';
+import { CrearTareasComponent } from './tareas/crear-tareas/crear-tareas.component';
+import { ListarTareasComponent } from './tareas/listar-tareas/listar-tareas.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { CalendarComponent } from './componentes/calendar/calendar.component';
     ListaGruposComponent,
     CrearGruposComponent,
     CalendarComponent,
-    NavbarComponent
+    NavbarComponent,
+    CrearTareasComponent,
+    ListarTareasComponent
   ],
   imports: [
     BrowserModule,

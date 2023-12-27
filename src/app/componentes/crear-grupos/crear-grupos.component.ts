@@ -46,12 +46,14 @@ export class CrearGruposComponent implements OnInit {
   fechaInicioValidator(control: AbstractControl): ValidationErrors | null {
     const fechaInicio = new Date(control.value);
     const fechaActual = new Date();
+    fechaActual.setHours(0, 0, 0, 0);
     return fechaInicio >= fechaActual ? null : { fechaInvalida: true };
   }
 
   fechaFinValidator(control: AbstractControl): ValidationErrors | null {
     const fechaFin = new Date(control.value);
     const fechaActual = new Date();
+    fechaActual.setHours(0, 0, 0, 0);
     return fechaFin >= fechaActual ? null : { fechaInvalida: true };
   }
 

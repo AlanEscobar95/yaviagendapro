@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable} from 'rxjs';
+import { Observable, map} from 'rxjs';
 
 
 
@@ -31,6 +31,15 @@ constructor(private firestore: AngularFirestore, private auth: AngularFireAuth){
 
   actualizarGrupo(id: string, data: any): Promise<any>{
     return this.firestore.collection('grupos').doc(id).update(data);
+  }
+
+  obtenerIntegrantesDeGrupo(idGrupo: string): Observable<string[]> {
+    if (!idGrupo) {
+      return new Observable<string[]>(observer => observer.next([]));
+    }
+    return this.firestore.collection('grupos').doc(idGrupo).valueChanges().pipe(
+      map((grupo: any) => grupo.integrantes || [])
+    );
   }
 
 }

@@ -8,6 +8,8 @@ import { HomeComponent } from './componentes/home/home.component';
 import { CrearGruposComponent } from './componentes/crear-grupos/crear-grupos.component';
 import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.component';
 import { CalendarComponent } from './componentes/calendar/calendar.component';
+import { ListarTareasComponent } from './tareas/listar-tareas/listar-tareas.component';
+import { CrearTareasComponent } from './tareas/crear-tareas/crear-tareas.component';
 
 const routes: Routes = [
   {path:'', redirectTo: 'login', pathMatch: 'full'},
@@ -20,6 +22,9 @@ const routes: Routes = [
   {path:'crear-grupos', component: CrearGruposComponent },
   {path:'editarGrupos/:id', component: CrearGruposComponent },
   {path:'calendar', component: CalendarComponent },
+  {path:'listar-tareas', component: ListarTareasComponent },
+  {path:'crear-tareas', component: CrearTareasComponent },
+  {path:'editarTareas/:id', component: ListarTareasComponent },
   {path:'**', redirectTo: 'login', pathMatch:'full'},
 
 ];
