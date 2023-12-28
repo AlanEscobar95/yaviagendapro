@@ -5,6 +5,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 
 import { environment } from 'src/environments/environments';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +23,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CalendarComponent } from './componentes/calendar/calendar.component';
 import { CrearTareasComponent } from './tareas/crear-tareas/crear-tareas.component';
 import { ListarTareasComponent } from './tareas/listar-tareas/listar-tareas.component';
+import { InicioComponent } from './componentes/inicio/inicio.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { ListarTareasComponent } from './tareas/listar-tareas/listar-tareas.comp
     LoginComponent,
     RegistroComponent,
     HomeComponent,
+    InicioComponent,
     VerificarCorreoComponent,
     RecuperarPasswordComponent,
     SpinnerComponent,
@@ -46,6 +50,7 @@ import { ListarTareasComponent } from './tareas/listar-tareas/listar-tareas.comp
     AngularFirestoreModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    CarouselModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
