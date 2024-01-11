@@ -25,8 +25,8 @@ constructor(private firestore: AngularFirestore, private auth: AngularFireAuth){
     return this.firestore.collection('tareas').doc(id).delete();
   }
 
-  getTarea(id: string): Observable<any>{
-    return this.firestore.collection('tareas').doc(id).snapshotChanges();
+  getTareas(): Observable<any[]> {
+    return this.firestore.collection('tareas', ref => ref.orderBy('fechaInicio', 'asc')).valueChanges();
   }
 
   actualizarTarea(id: string, data: any): Promise<any>{

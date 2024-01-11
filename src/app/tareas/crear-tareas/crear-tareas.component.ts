@@ -117,7 +117,7 @@ export class CrearTareasComponent {
       .then(() => {
         this.toastr.success('Tarea registrada con éxito');
         this.loading = false;
-        this.router.navigate(['/listar-tareas']);
+        this.router.navigate(['/calendario']);
       })
       .catch(error => {
         console.error(error);

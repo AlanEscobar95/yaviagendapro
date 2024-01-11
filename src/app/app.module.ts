@@ -6,6 +6,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 import { environment } from 'src/environments/environments';
@@ -20,10 +21,10 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.component';
 import { CrearGruposComponent } from './componentes/crear-grupos/crear-grupos.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { CalendarComponent } from './componentes/calendar/calendar.component';
 import { CrearTareasComponent } from './tareas/crear-tareas/crear-tareas.component';
 import { ListarTareasComponent } from './tareas/listar-tareas/listar-tareas.component';
 import { InicioComponent } from './componentes/inicio/inicio.component';
+import { CalendarioComponent } from './componentes/calendario/calendario.component';
 
 @NgModule({
   declarations: [
@@ -37,10 +38,10 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
     SpinnerComponent,
     ListaGruposComponent,
     CrearGruposComponent,
-    CalendarComponent,
     NavbarComponent,
     CrearTareasComponent,
-    ListarTareasComponent
+    ListarTareasComponent,
+    CalendarioComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +50,7 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     BrowserAnimationsModule,
+    FullCalendarModule,
     ToastrModule.forRoot(),
     CarouselModule.forRoot()
   ],

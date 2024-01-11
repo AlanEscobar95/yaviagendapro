@@ -1,0 +1,14 @@
+<app-navbar></app-navbar>
+
+<style>
+  /* Agrega tu estilo personalizado aquí si es necesario */
+  body {
+    padding-top: 56px; /* Ajuste para el navbar fijo en la parte superior */
+  }
+</style>
+
+<button class="btn btn-success btn-lg " routerLink="/crear-tareas"> + Crear </button>
+<full-calendar #fullCalendar [options]="calendarOptions"></full-calendar>
+
+
+
