@@ -22,7 +22,6 @@ import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.co
 import { CrearGruposComponent } from './componentes/crear-grupos/crear-grupos.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CrearTareasComponent } from './tareas/crear-tareas/crear-tareas.component';
-import { ListarTareasComponent } from './tareas/listar-tareas/listar-tareas.component';
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { CalendarioComponent } from './componentes/calendario/calendario.component';
 
@@ -40,7 +39,6 @@ import { CalendarioComponent } from './componentes/calendario/calendario.compone
     CrearGruposComponent,
     NavbarComponent,
     CrearTareasComponent,
-    ListarTareasComponent,
     CalendarioComponent
   ],
   imports: [

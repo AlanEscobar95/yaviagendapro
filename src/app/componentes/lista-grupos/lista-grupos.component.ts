@@ -37,10 +37,8 @@ export class ListaGruposComponent implements OnInit {
 
 deleteGrupo(id: string){
   this._gruposService.EliminarGrupos(id).then (() => {
-    this.toastr.error('El Grupo fue eliminado con éxito', 'Registro Eliminado')
-  }).catch(error => {
-
-  })
+    this.toastr.success('El Grupo fue eliminado con éxito', 'Registro Eliminado')
+  });
 }
 
 
