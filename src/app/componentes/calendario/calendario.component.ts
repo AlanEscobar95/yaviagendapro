@@ -5,6 +5,7 @@ import esLocale from '@fullcalendar/core/locales/es';
 import { TareasService } from 'src/app/servicios/tareas.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/servicios/auth-service.service';
 
 @Component({
   selector: 'app-calendario',
@@ -24,28 +25,40 @@ export class CalendarioComponent implements OnInit {
 
   constructor(private _tareasService: TareasService, 
     private toastr: ToastrService,
-    private router: Router) {}
+    private router: Router,
+    private _authService: AuthService ) {}
 
   ngOnInit(): void {
     this.obtenerTareas();
+    
   }
 
   obtenerTareas() {
-    this._tareasService.getTareas().subscribe(
-      tareas => {
-        console.log('Tareas obtenidas:', tareas);
-        this.calendarOptions.events = tareas.map(tarea => ({
-          id: tarea.id,
-          title: tarea.nombre,
-          start: tarea.fechaInicio,
-          end: tarea.fechaFin
-        }));
-      },
-      error => {
-        console.error('Error al obtener tareas:', error);
-      }
-    );
+    const correoUsuario = this._authService.getCorreoUsuarioActual();
+
+    if (correoUsuario) {
+      this._tareasService.getTareas().subscribe(
+        tareas => {
+          console.log('Tareas obtenidas:', tareas);
+
+          const tareasUsuarioActual = tareas.filter(tarea => tarea.integrantes.includes(correoUsuario));
+
+          this.calendarOptions.events = tareasUsuarioActual.map(tarea => ({
+            id: tarea.id,
+            title: tarea.nombre,
+            start: tarea.fechaInicio,
+            end: tarea.fechaFin
+          }));
+        },
+        error => {
+          console.error('Error al obtener tareas:', error);
+        }
+      );
+    } else {
+      console.error('Correo del usuario actual no disponible.');
+    }
   }
+
 
   actualizarVistaCalendario(eventId: string) {
     if (this.calendarOptions && Array.isArray(this.calendarOptions.events)) {
@@ -72,7 +85,7 @@ export class CalendarioComponent implements OnInit {
     deleteButton.onclick = () => this.eliminarEvento(arg.event.id);
 
     const editButton = document.createElement('span');
-    editButton.innerHTML = '✎';  // Icono de lápiz para editar
+    editButton.innerHTML = '✎'; 
     editButton.className = 'edit-button';
     editButton.onclick = () => this.editarEvento(arg.event.id);
 
