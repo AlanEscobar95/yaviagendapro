@@ -24,6 +24,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CrearTareasComponent } from './tareas/crear-tareas/crear-tareas.component';
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { CalendarioComponent } from './componentes/calendario/calendario.component';
+import { EditarTareasComponent } from './tareas/editar-tareas/editar-tareas.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CalendarioComponent } from './componentes/calendario/calendario.compone
     CrearGruposComponent,
     NavbarComponent,
     CrearTareasComponent,
-    CalendarioComponent
+    CalendarioComponent,
+    EditarTareasComponent
   ],
   imports: [
     BrowserModule,

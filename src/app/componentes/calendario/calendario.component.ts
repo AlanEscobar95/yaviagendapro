@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import esLocale from '@fullcalendar/core/locales/es';
 import { TareasService } from 'src/app/servicios/tareas.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendario',
@@ -21,7 +22,9 @@ export class CalendarioComponent implements OnInit {
     eventContent: this.customEventContent.bind(this),
   };
 
-  constructor(private _tareasService: TareasService, private toastr: ToastrService) {}
+  constructor(private _tareasService: TareasService, 
+    private toastr: ToastrService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.obtenerTareas();
@@ -82,8 +85,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   editarEvento(eventId: string) {
-    // Lógica para editar el evento con el ID proporcionado
-    console.log('Editar evento con ID:', eventId);
+    this.router.navigate(['/editar-tareas', eventId]);
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {

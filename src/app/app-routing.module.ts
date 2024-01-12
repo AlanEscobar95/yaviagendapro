@@ -11,6 +11,7 @@ import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.co
 import { CrearTareasComponent } from './tareas/crear-tareas/crear-tareas.component';
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { CalendarioComponent } from './componentes/calendario/calendario.component';
+import { EditarTareasComponent } from './tareas/editar-tareas/editar-tareas.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'editarGrupos/:id', component: CrearGruposComponent },
   { path: 'calendario', component: CalendarioComponent },
   { path: 'crear-tareas', component: CrearTareasComponent },
+  { path: 'editar-tareas/:id', component: EditarTareasComponent },
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
 ];
 

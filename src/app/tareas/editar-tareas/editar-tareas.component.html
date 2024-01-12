@@ -3,16 +3,16 @@
 
  <div *ngIf="!loading" class="card">
       <div  class="card-body">
-            <h1>Crear Tareas</h1>
-            <span *ngIf="enviado && (crearTareas.get('integrantes')?.invalid && !crearTareas.get('integrantes')?.hasError('required'))">
+            <h1>Editar Tareas</h1>
+            <span *ngIf="enviado && (editarTareas.get('integrantes')?.invalid && !editarTareas.get('integrantes')?.hasError('required'))">
       TODOS LOS CAMPOS SON OBLIGATORIOS
     </span>
-    <form [formGroup]="crearTareas" (ngSubmit)="agregarEditarTareas()">
+    <form [formGroup]="editarTareas" (ngSubmit)="agregarEditarTareas()">
       <div class="form-floating mb-3">
         <input type="nombre" class="form-control" formControlName="nombre" placeholder="Ejm: Realizar un Crud">
         <label>Nombre de la Tarea</label>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('nombre')?.hasError('required') && crearTareas.get('nombre')?.touched">
+          *ngIf="editarTareas.get('nombre')?.hasError('required') && editarTareas.get('nombre')?.touched">
           El <strong>nombre de la tarea</strong> es obligatorio.
         </span>
       </div>
@@ -21,11 +21,11 @@
         <input type="descripcion" class="form-control" formControlName="descripcion" placeholder="Ejm: Crear una crud de empleados">
         <label>Descripción</label>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('descripcion')?.hasError('required') && crearTareas.get('descripcion')?.touched">
+          *ngIf="editarTareas.get('descripcion')?.hasError('required') && editarTareas.get('descripcion')?.touched">
           La <strong>descripcion</strong> es obligatoria.
         </span>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('descripcion')?.hasError('maxlength') && crearTareas.get('descripcion')?.touched">
+          *ngIf="editarTareas.get('descripcion')?.hasError('maxlength') && editarTareas.get('descripcion')?.touched">
           La <strong>descripcion</strong> no puede tener más de 255 caracteres.
         </span>
       </div>
@@ -44,7 +44,7 @@
           </ng-container>
         </select>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('integrantes')?.hasError('required') && crearTareas.get('integrantes')?.touched">
+          *ngIf="editarTareas.get('integrantes')?.hasError('required') && editarTareas.get('integrantes')?.touched">
           Debe seleccionar un <strong>integrante</strong>.
         </span>
       </div>
@@ -56,7 +56,7 @@
           <option *ngFor="let integrante of listaIntegrantes" [value]="integrante">{{ integrante }}</option>
         </select>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('integrantes')?.hasError('required') && crearTareas.get('integrantes')?.touched">
+          *ngIf="editarTareas.get('integrantes')?.hasError('required') && editarTareas.get('integrantes')?.touched">
           Debe seleccionar un <strong>integrante</strong>.
         </span>
       </div>
@@ -74,11 +74,11 @@
         <input type="date" class="form-control" formControlName="fechaInicio" placeholder="Fecha de inicio">
         <label>Fecha de inicio de la Tarea</label>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('fechaInicio')?.hasError('required') && crearTareas.get('fechaInicio')?.touched">
+          *ngIf="editarTareas.get('fechaInicio')?.hasError('required') && editarTareas.get('fechaInicio')?.touched">
           La <strong>fecha de inicio</strong> es obligatoria.
         </span>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('fechaInicio')?.hasError('fechaInvalida') && crearTareas.get('fechaInicio')?.touched">
+          *ngIf="editarTareas.get('fechaInicio')?.hasError('fechaInvalida') && editarTareas.get('fechaInicio')?.touched">
           La <strong>fecha de inicio</strong> no puede ser menor a la actual.
         </span>
       </div>
@@ -88,11 +88,11 @@
         <input type="date" class="form-control" formControlName="fechaFin" placeholder="Fecha de fin">
         <label>Fecha de finalización</label>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('fechaFin')?.hasError('required') && crearTareas.get('fechaFin')?.touched">
+          *ngIf="editarTareas.get('fechaFin')?.hasError('required') && editarTareas.get('fechaFin')?.touched">
           La <strong>fecha de finalizacion</strong> es obligatoria.
         </span>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('fechaFin')?.hasError('fechaInvalida') && crearTareas.get('fechaFin')?.touched">
+          *ngIf="editarTareas.get('fechaFin')?.hasError('fechaInvalida') && editarTareas.get('fechaFin')?.touched">
           La <strong>fecha de finalizacion</strong> no puede ser menor a la actual.
         </span>
       </div>
@@ -104,7 +104,7 @@
           <option value="Media">Media</option>
           <option value="Alta">Alta</option>
         </select>
-        <span class="text-danger errorLabel" *ngIf="crearTareas.get('prioridad')?.hasError('required') && crearTareas.get('prioridad')?.touched">
+        <span class="text-danger errorLabel" *ngIf="editarTareas.get('prioridad')?.hasError('required') && editarTareas.get('prioridad')?.touched">
           La <strong>prioridad</strong> es obligatoria.
         </span>
       </div>
@@ -112,7 +112,7 @@
       <!-- Botones Volver y Enviar -->
       <div class="d-flex justify-content-between mt-3">
         <button class="btn btn-danger" routerLink="/calendario">Volver</button>
-        <button type="submit" class="btn btn-success" formControlName="enviarButton" [disabled]="crearTareas.invalid">Enviar</button>
+        <button type="submit" class="btn btn-success" formControlName="enviarButton" [disabled]="editarTareas.invalid">Editar</button>
       </div>
     </form>
   </div>
@@ -120,3 +120,4 @@
   <!-- Section: Design Block -->
   <app-spinner *ngIf="loading"></app-spinner>
 </div>
+

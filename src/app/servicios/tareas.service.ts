@@ -49,8 +49,6 @@ constructor(private firestore: AngularFirestore, private auth: AngularFireAuth){
       });
   }
   
-  
-  
   actualizarTarea(id: string, data: any): Promise<any>{
     return this.firestore.collection('tareas').doc(id).update(data);
   }
