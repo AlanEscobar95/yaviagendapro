@@ -82,21 +82,24 @@
           La <strong>fecha de inicio</strong> no puede ser menor a la actual.
         </span>
       </div>
-
-
+      
       <div class="form-floating mb-3">
         <input type="date" class="form-control" formControlName="fechaFin" placeholder="Fecha de fin">
         <label>Fecha de finalización</label>
         <span class="text-danger errorLabel"
           *ngIf="crearTareas.get('fechaFin')?.hasError('required') && crearTareas.get('fechaFin')?.touched">
-          La <strong>fecha de finalizacion</strong> es obligatoria.
+          La <strong>fecha de finalización</strong> es obligatoria.
         </span>
         <span class="text-danger errorLabel"
           *ngIf="crearTareas.get('fechaFin')?.hasError('fechaInvalida') && crearTareas.get('fechaFin')?.touched">
-          La <strong>fecha de finalizacion</strong> no puede ser menor a la actual.
+          La <strong>fecha de finalización</strong> no puede ser menor a la actual.
+        </span>
+        <span class="text-danger errorLabel"
+          *ngIf="crearTareas.get('fechaFin')?.hasError('fechaFinMenorQueInicio') && crearTareas.get('fechaFin')?.touched">
+          La <strong>fecha de finalización</strong> no puede ser menor que la fecha de inicio.
         </span>
       </div>
-
+      
       <div class="form-floating mb-3">
         <select class="form-select" formControlName="prioridad">
           <option value="" disabled selected>Selecciona una prioridad</option>
@@ -109,6 +112,16 @@
         </span>
       </div>
 
+      <div class="form-floating mb-3">
+        <select class="form-select" formControlName="estado">
+          <option value="" disabled selected>Selecciona el estado</option>
+          <option value="Trabajo en Progreso" selected>Trabajo en Progreso</option>
+        </select>
+        <span class="text-danger errorLabel" *ngIf="crearTareas.get('estado')?.hasError('required') && crearTareas.get('estado')?.touched">
+          El <strong>estado</strong> es obligatorio.
+        </span>
+      </div>
+      
       <!-- Botones Volver y Enviar -->
       <div class="d-flex justify-content-between mt-3">
         <button class="btn btn-danger" routerLink="/calendario">Volver</button>

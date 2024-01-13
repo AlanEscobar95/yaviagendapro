@@ -33,6 +33,7 @@ export class CrearTareasComponent {
       fechaInicio: ['', [Validators.required, this.fechaInicioValidator.bind(this)]],
       fechaFin: ['', [Validators.required, this.fechaFinValidator.bind(this)]],
       prioridad: ['', [Validators.required]],
+      estado: ['', [Validators.required]],
       enviarButton: [{ value: null, disabled: true }],
       idGrupo: [''],
       textoVisualizar: ['']
@@ -84,6 +85,12 @@ export class CrearTareasComponent {
     return fechaFin >= fechaActual ? null : { fechaInvalida: true };
   }
 
+  fechaFinMayorQueInicioValidator(control: AbstractControl): ValidationErrors | null {
+    const fechaInicio = new Date(this.crearTareas.value.fechaInicio);
+    const fechaFin = new Date(control.value);
+    return fechaFin >= fechaInicio ? null : { fechaFinMenorQueInicio: true };
+  }
+
   agregarEditarTareas() {
     this.enviado = true;
 
@@ -108,7 +115,8 @@ export class CrearTareasComponent {
       fechaFin: this.crearTareas.value.fechaFin,
       fechaIngreso: new Date(),
       fechaModificacion: new Date(),
-      prioridad: this.crearTareas.value.prioridad 
+      prioridad: this.crearTareas.value.prioridad,
+      estado: this.crearTareas.value.estado,
     };
 
     this.loading = true;

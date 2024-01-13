@@ -21,27 +21,38 @@ export class CalendarioComponent implements OnInit {
     locale: esLocale,
     events: [],
     eventContent: this.customEventContent.bind(this),
+    themeSystem: 'bootstrap'
+    
   };
 
-  constructor(private _tareasService: TareasService, 
+  usuarioActual: string = '';
+
+  constructor(
+    private _tareasService: TareasService,
     private toastr: ToastrService,
     private router: Router,
-    private _authService: AuthService ) {}
+    private _authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.obtenerTareas();
-    
+    this._authService.getCorreoUsuarioActual().subscribe(
+      correo => {
+        this.usuarioActual = correo;
+        this.obtenerTareas();
+      },
+      error => {
+        console.error('Error al obtener el correo del usuario actual:', error);
+      }
+    );
   }
 
   obtenerTareas() {
-    const correoUsuario = this._authService.getCorreoUsuarioActual();
-
-    if (correoUsuario) {
+    if (this.usuarioActual) {
       this._tareasService.getTareas().subscribe(
         tareas => {
           console.log('Tareas obtenidas:', tareas);
 
-          const tareasUsuarioActual = tareas.filter(tarea => tarea.integrantes.includes(correoUsuario));
+          const tareasUsuarioActual = tareas.filter(tarea => tarea.integrantes.includes(this.usuarioActual));
 
           this.calendarOptions.events = tareasUsuarioActual.map(tarea => ({
             id: tarea.id,
@@ -49,6 +60,8 @@ export class CalendarioComponent implements OnInit {
             start: tarea.fechaInicio,
             end: tarea.fechaFin
           }));
+
+          this.calendarOptions = { ...this.calendarOptions };
         },
         error => {
           console.error('Error al obtener tareas:', error);
@@ -58,7 +71,6 @@ export class CalendarioComponent implements OnInit {
       console.error('Correo del usuario actual no disponible.');
     }
   }
-
 
   actualizarVistaCalendario(eventId: string) {
     if (this.calendarOptions && Array.isArray(this.calendarOptions.events)) {

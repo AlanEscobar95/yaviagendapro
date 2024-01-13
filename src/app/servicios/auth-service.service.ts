@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,12 @@ export class AuthService {
     return this.afAuth.authState;
   }
 
-  getCorreoUsuarioActual(): string {
-    return this.usuarioActual;
+  getCorreoUsuarioActual(): Observable<string | null> {
+    return this.afAuth.authState.pipe(
+      map(user => (user ? user.email : null))
+    );
   }
+  
 
   iniciarSesion(email: string, password: string): Promise<any> {
     return this.afAuth.signInWithEmailAndPassword(email, password);

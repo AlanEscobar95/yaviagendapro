@@ -82,30 +82,33 @@
           La <strong>fecha de inicio</strong> no puede ser menor a la actual.
         </span>
       </div>
-
-
+      
       <div class="form-floating mb-3">
         <input type="date" class="form-control" formControlName="fechaFin" placeholder="Fecha de fin">
         <label>Fecha de finalización</label>
         <span class="text-danger errorLabel"
           *ngIf="editarTareas.get('fechaFin')?.hasError('required') && editarTareas.get('fechaFin')?.touched">
-          La <strong>fecha de finalizacion</strong> es obligatoria.
+          La <strong>fecha de finalización</strong> es obligatoria.
         </span>
         <span class="text-danger errorLabel"
           *ngIf="editarTareas.get('fechaFin')?.hasError('fechaInvalida') && editarTareas.get('fechaFin')?.touched">
-          La <strong>fecha de finalizacion</strong> no puede ser menor a la actual.
+          La <strong>fecha de finalización</strong> no puede ser menor a la actual.
+        </span>
+        <span class="text-danger errorLabel"
+          *ngIf="editarTareas.get('fechaFin')?.hasError('fechaFinMenorQueInicio') && editarTareas.get('fechaFin')?.touched">
+          La <strong>fecha de finalización</strong> no puede ser menor que la fecha de inicio.
         </span>
       </div>
 
       <div class="form-floating mb-3">
-        <select class="form-select" formControlName="prioridad">
-          <option value="" disabled selected>Selecciona una prioridad</option>
-          <option value="Baja">Baja</option>
-          <option value="Media">Media</option>
-          <option value="Alta">Alta</option>
+        <select class="form-select" formControlName="estado">
+          <option value="" disabled selected>Selecciona una estado</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Trabajo en Progreso">Trabajo en Progreso</option>
+          <option value="Completada">Completada</option>
         </select>
         <span class="text-danger errorLabel" *ngIf="editarTareas.get('prioridad')?.hasError('required') && editarTareas.get('prioridad')?.touched">
-          La <strong>prioridad</strong> es obligatoria.
+          El <strong>estado</strong> es obligatorio.
         </span>
       </div>
 

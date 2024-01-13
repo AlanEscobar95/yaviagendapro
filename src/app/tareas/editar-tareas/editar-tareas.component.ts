@@ -33,7 +33,7 @@ export class EditarTareasComponent implements OnInit {
       integrantes: ['', [Validators.required, Validators.email]],
       fechaInicio: ['', [Validators.required, this.fechaInicioValidator.bind(this)]],
       fechaFin: ['', [Validators.required, this.fechaFinValidator.bind(this)]],
-      prioridad: ['', [Validators.required]],
+      estado: ['', [Validators.required]],
       enviarButton: [{ value: null, disabled: true }],
       idGrupo: [''],
       textoVisualizar: ['']
@@ -63,10 +63,12 @@ export class EditarTareasComponent implements OnInit {
   
         this._gruposService.obtenerIntegrantesDeGrupo(id).subscribe(integrantes => {
           integrantes.forEach((integrante: string) => {
-            integrantesSet.add(integrante);
+            if (!this.correosIntegrantes.includes(integrante)) {
+              integrantesSet.add(integrante);
+            }
           });
   
-          const grupoConIntegrantes = { id, ...data, integrantes };
+          const grupoConIntegrantes = { id, ...data, integrantes: Array.from(integrantesSet) };
           this.listaGrupos.push(grupoConIntegrantes);
         });
   
@@ -80,14 +82,19 @@ export class EditarTareasComponent implements OnInit {
     this._tareasService.getTareas().subscribe(tareas => {
       const tarea = tareas.find(t => t.id === this.tareaId);
       if (tarea) {
+        this.correosIntegrantes = [...tarea.integrantes];
+  
         this.editarTareas.patchValue({
           nombre: tarea.nombre,
           descripcion: tarea.descripcion,
-          integrantes: tarea.integrantes,
+          integrantes: tarea.integrantes, 
           fechaInicio: tarea.fechaInicio,
           fechaFin: tarea.fechaFin,
-          prioridad: tarea.prioridad,
+          estado: tarea.estado,
         });
+  
+        this.actualizarTextoVisualizar();
+        this.verificarIntegrantes();
       } else {
         console.log(`No se encontró una tarea con ID: ${this.tareaId}`);
       }
@@ -109,6 +116,12 @@ export class EditarTareasComponent implements OnInit {
     return fechaFin >= fechaActual ? null : { fechaInvalida: true };
   }
 
+  fechaFinMayorQueInicioValidator(control: AbstractControl): ValidationErrors | null {
+    const fechaInicio = new Date(this.editarTareas.value.fechaInicio);
+    const fechaFin = new Date(control.value);
+    return fechaFin >= fechaInicio ? null : { fechaFinMenorQueInicio: true };
+  }
+
   agregarEditarTareas() {
     this.enviado = true;
 
@@ -128,14 +141,17 @@ export class EditarTareasComponent implements OnInit {
     const tarea: any = {
       nombre: this.editarTareas.value.nombre,
       descripcion: this.editarTareas.value.descripcion,
-      integrantes: this.correosIntegrantes,
       fechaInicio: this.editarTareas.value.fechaInicio,
       fechaFin: this.editarTareas.value.fechaFin,
-      prioridad: this.editarTareas.value.prioridad,
+      estado: this.editarTareas.value.estado,
     };
   
+    if (!this.editarTareas.value.integrantes) {
+      tarea.integrantes = this.correosIntegrantes;
+    }
+  
     this.loading = true;
-
+  
     this._tareasService.actualizarTarea(this.tareaId, tarea)
       .then(() => {
         this.toastr.success('Tarea editada con éxito');
@@ -144,11 +160,11 @@ export class EditarTareasComponent implements OnInit {
       })
       .catch(error => {
         console.error('Error al editar tarea:', error);
-        // Manejar el error (mostrar mensaje, etc.)
         this.loading = false;
       });
   }
   
+
   agregarIntegrante() {
     const integrantesControl = this.editarTareas.get('integrantes');
     if (integrantesControl && integrantesControl.valid && integrantesControl.value.trim() !== '') {
