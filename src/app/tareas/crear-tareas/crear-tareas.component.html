@@ -1,8 +1,9 @@
 <app-navbar></app-navbar>
-<div class="wrapper">
+<br>
+<div [ngClass]="{'dark-theme': isDarkTheme, 'light-theme': isLightTheme}" class="p-5 ">
 
- <div *ngIf="!loading" class="card">
-      <div  class="card-body">
+  <div *ngIf="!loading" class="card fondo-card mx-auto col-lg-6"> 
+    <div class="card-body">
             <h1>Crear Tareas</h1>
             <span *ngIf="enviado && (crearTareas.get('integrantes')?.invalid && !crearTareas.get('integrantes')?.hasError('required'))">
       TODOS LOS CAMPOS SON OBLIGATORIOS
@@ -131,5 +132,7 @@
   </div>
 </div>
   <!-- Section: Design Block -->
-  <app-spinner *ngIf="loading"></app-spinner>
+  <app-spinner *ngIf="loading" class="centrar-spinner"></app-spinner>
 </div>
+<br>
+<app-footer></app-footer>

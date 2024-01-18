@@ -1,12 +1,7 @@
 <app-navbar></app-navbar>
 
-<style>
-  /* Agrega tu estilo personalizado aquí si es necesario */
-  body {
-    padding-top: 56px; /* Ajuste para el navbar fijo en la parte superior */
-  }
-</style>
-
+<div [ngClass]="{'dark-theme': isDarkTheme, 'light-theme': !isDarkTheme}">
+ 
 <section class="py-5">
   <div class="container">
     <div class="row">
@@ -73,10 +68,4 @@
   </div>
 </div>
 
-<!-- Pie de página -->
-<footer class="py-3 bg-dark">
-  <div class="container">
-    <p class="m-0 text-center text-white">© 2023 Mi Sitio</p>
-  </div>
-</footer>
-
+<app-footer></app-footer>

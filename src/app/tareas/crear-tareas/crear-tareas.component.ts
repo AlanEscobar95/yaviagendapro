@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GruposService } from 'src/app/servicios/grupos.service';
 import { TareasService } from 'src/app/servicios/tareas.service';
+import { TemaService } from 'src/app/servicios/tema.service';
 
 @Component({
   selector: 'app-crear-tareas',
@@ -17,14 +18,17 @@ export class CrearTareasComponent {
   loading = false;
   listaIntegrantes: string[] = [];
   listaGrupos: any[] = [];
-
+  isDarkTheme: boolean = false;
+  isLightTheme: boolean = true;
 
   constructor(
     private fb: FormBuilder,
     private _tareasService: TareasService,
     private _gruposService: GruposService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private temaService: TemaService
+
   ) {
     this.crearTareas = this.fb.group({
       nombre: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('^[a-zA-Z ]*$')]],
@@ -43,6 +47,10 @@ export class CrearTareasComponent {
   ngOnInit(): void {
     this.obtenerGrupos();
     this.verificarIntegrantes();
+    this.temaService.isDarkTheme.subscribe((darkTheme: boolean) => {
+      this.isDarkTheme = darkTheme;
+      this.isLightTheme = !darkTheme;
+    });
   }
 
   obtenerGrupos() {

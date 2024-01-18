@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GruposService } from 'src/app/servicios/grupos.service';
+import { TemaService } from 'src/app/servicios/tema.service';
 
 
 @Component({
@@ -17,10 +18,13 @@ export class CrearGruposComponent implements OnInit {
   loading: boolean = false;
   id: string | null;
   tituloFormulario: string = 'Crear Grupo';
+  isDarkTheme: boolean = false;
+  isLightTheme: boolean = true;
 
   constructor(
     private fb: FormBuilder,
     private _gruposService: GruposService,
+    private _temaService: TemaService,
     private router: Router,
     private toastr: ToastrService,
     private aRoute: ActivatedRoute
@@ -41,8 +45,11 @@ export class CrearGruposComponent implements OnInit {
   ngOnInit(): void {
     this.editar();
     this.verificarIntegrantes();
+    this._temaService.isDarkTheme.subscribe((darkTheme: boolean) => {
+      this.isDarkTheme = darkTheme;
+      this.isLightTheme = !darkTheme;
+    });
   }
-
   fechaInicioValidator(control: AbstractControl): ValidationErrors | null {
     const fechaInicio = new Date(control.value);
     const fechaActual = new Date();

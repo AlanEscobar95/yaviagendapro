@@ -1,48 +1,64 @@
+
+:host {
+  display: block;
+
+}
+
+
+.dark-theme {
+  color: white; 
+  background-color: #333;
+  height: 100%;
+}
+
+.light-theme {
+  color: black; 
+  background-color: white;
+  height: 100%;
+}
+.fondo-card{
+  background-image: url('../../../assets/img/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+}
+
 .correos-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .correo-etiqueta {
-    display: flex;
-    align-items: center;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    font-size: 12px; 
-  }
-  
-  .correo-etiqueta span {
-    padding: 5px;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-  }
-  
-  .correo-etiqueta button {
-    margin-left: 1px; 
-    color: red;
-    cursor: pointer;
-    border: none;
-    background: none;
-  }
-  .wrapper {
-    background-image: url('../../../assets/img/fondo.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh; 
-  }
-  .card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px; 
-    width: 100%;
-    padding: 20px;
-    margin: 20px;
-  }
-  
-  .card-body {
-    text-align: center; 
-  }
-  
-  
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.correo-etiqueta {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 12px; /* Ajusta el tamaño de fuente según tus preferencias */
+}
+
+.correo-etiqueta span {
+  padding: 5px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+}
+
+.correo-etiqueta button {
+  margin-left: 1px; /* Ajusta el margen izquierdo según tus preferencias */
+  color: red;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+
+.card-body {
+  text-align: center; 
+}
+
+.centrar-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

@@ -1,6 +1,13 @@
 <app-navbar></app-navbar>
+
+<div [ngClass]="{'dark-theme': isDarkTheme, 'light-theme': !isDarkTheme}">
+
+<br><br>
 <button class="btn btn-success btn-lg " routerLink="/crear-tareas"> + Crear </button>
 <full-calendar #fullCalendar [options]="calendarOptions"></full-calendar>
+</div>
+<app-footer></app-footer>
+
 
 
 

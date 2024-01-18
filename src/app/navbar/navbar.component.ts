@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { TemaService } from '../servicios/tema.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,22 +10,38 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   dataUser: any;
-  constructor(private afAuth: AngularFireAuth,
-    private router: Router) {}
+  isDarkTheme: boolean = false;
 
-    ngOnInit(): void {
-      this.afAuth.currentUser.then(user => {
-        if(user && user.emailVerified) {
-         this.dataUser = user;
-        } else {
-          this.router.navigate(['/login']);
-        }
-      });
-    }
-
-    logOut() {
-      this.afAuth.signOut().then(() => {
-        this.router.navigate(['/login']);
-      })
-    }
+  constructor(
+    private afAuth: AngularFireAuth,
+    private router: Router,
+    private themeService: TemaService
+  ) {
+    console.log('Servicio de Tema:', this.themeService);
   }
+
+  ngOnInit(): void {
+    this.themeService.isDarkTheme.subscribe((darkTheme) => {
+      this.isDarkTheme = darkTheme;
+    });
+
+    this.afAuth.currentUser.then(user => {
+      if (user && user.emailVerified) {
+        this.dataUser = user;
+      } else {
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+
+  logOut() {
+    this.afAuth.signOut().then(() => {
+      this.router.navigate(['/login']);
+    });
+  }
+
+  toggleTheme() {
+    this.themeService.toggleDarkTheme();
+    console.log("Cambiar Tema");
+  }
+}

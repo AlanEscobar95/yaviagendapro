@@ -6,6 +6,7 @@ import { TareasService } from 'src/app/servicios/tareas.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth-service.service';
+import { TemaService } from 'src/app/servicios/tema.service';  
 
 @Component({
   selector: 'app-calendario',
@@ -26,15 +27,20 @@ export class CalendarioComponent implements OnInit {
   };
 
   usuarioActual: string = '';
-
+  isDarkTheme: boolean = false; 
   constructor(
     private _tareasService: TareasService,
     private toastr: ToastrService,
     private router: Router,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private temaService: TemaService 
   ) {}
 
   ngOnInit(): void {
+    this.temaService.isDarkTheme.subscribe((darkTheme) => {
+      this.isDarkTheme = darkTheme;
+    });
+    
     this._authService.getCorreoUsuarioActual().subscribe(
       correo => {
         this.usuarioActual = correo;

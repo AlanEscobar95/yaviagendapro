@@ -3,7 +3,7 @@
     padding: 0px;
 }
 .espacioArriba{
-    margin-top: 90px;
+    margin-top: 105px;
 }
 /*SEPARADOR*/
 .separadorPag {
@@ -43,7 +43,7 @@ aside {
     color: green;
 }
 .container{
-    margin: 0 100px 0 100px;
+    margin: 0 120px 0 120px;
 
 }
 .card2 {
@@ -65,7 +65,8 @@ aside {
     margin-top: 50px;
     width: 49%;
     float: left;
-    padding: 50px
+    padding: 500px
+
 }
 .mitad2 {
     margin-top: 50px;
@@ -74,4 +75,49 @@ aside {
     padding: 50px
 }
 
+
+/*footer*/
+
+
+footer{
+    background-color: #333;
+    color: white;
+  }
+  footer ul{
+    padding:0;
+  }
+  footer li{
+    list-style: none;
+  }
+  .wrap-footer{
+    display: grid;
+    grid-template-columns: 40% 20% 20% 0%;
+    column-gap: 5%;
+    padding: 1rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+    margin-top: 0;
+
+  }
+
+  .footer-creds{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    color: white;
+    font-size: .9rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .legal-creds ul{
+    display: flex;
+    flex-flow: row;
+  }
+  .legal-creds ul li{
+    padding-right: 1rem;
+  }
+  .legal-creds ul a{
+    color: white;
+    font-size: .9rem;
+  }
 

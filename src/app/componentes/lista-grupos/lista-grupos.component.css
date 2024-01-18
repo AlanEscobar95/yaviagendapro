@@ -1,11 +1,29 @@
-i{
+
+:host {
+    display: block;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    height: 100vh; /* Ocupa toda la altura de la ventana de visualización */
+  }
+  
+  i{
     cursor: pointer;
 }
 
-.fondo {
-    background-image: url('../../../assets/img/fondo.jpg'); /* Reemplaza 'ruta-de-tu-imagen-de-fondo.jpg' con la ruta correcta de tu imagen */
+  .dark-theme {
+    color: white; 
+    background-color: #333;
+    height: 100%;
+  }
+
+  .light-theme {
+    color: black; 
+    background-color: white;
+    height: 100%;
+  }
+  .fondo-card{
+    background-image: url('../../../assets/img/fondo.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh; /* Ajusta la altura según sea necesario */
+
   }

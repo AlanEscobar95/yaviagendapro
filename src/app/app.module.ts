@@ -25,6 +25,7 @@ import { CrearTareasComponent } from './tareas/crear-tareas/crear-tareas.compone
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { CalendarioComponent } from './componentes/calendario/calendario.component';
 import { EditarTareasComponent } from './tareas/editar-tareas/editar-tareas.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { EditarTareasComponent } from './tareas/editar-tareas/editar-tareas.comp
     NavbarComponent,
     CrearTareasComponent,
     CalendarioComponent,
-    EditarTareasComponent
+    EditarTareasComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

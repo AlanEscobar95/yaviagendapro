@@ -1,10 +1,47 @@
-body {
-  padding-top: 56px; 
+
+/* Estilos generales para el componente */
+:host {
+  display: block;
+}
+  
+/* tema claro */
+.light-theme {
+  background-color: #fff;
+  color: #333;
 }
 
-.delete-button, .edit-button {
+/* tema oscuro */
+.dark-theme {
+  background-color: #333;
+  color: #fff;
+}
+
+body {
+  padding-top: 56px;
+}
+
+.delete-button,
+.edit-button {
   cursor: pointer;
   margin-left: 5px;
 }
 
+.evento-tarjeta {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #fff; 
+  color: #333; 
+}
+
+.evento-titulo {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555; 
+}
+
+.evento-descripcion {
+  color: #555;
+  color: #555; 
+}
 

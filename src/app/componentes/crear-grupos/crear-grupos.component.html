@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
-<div class="wrapper">
+<div [ngClass]="{'dark-theme': isDarkTheme, 'light-theme': isLightTheme}" class="p-5 ">
 
- <div *ngIf="!loading" class="card">
-      <div  class="card-body">
+  <div *ngIf="!loading" class="card fondo-card mx-auto col-lg-6">
+    <div class="card-body">
             <h1>{{tituloFormulario}}</h1>
     <span *ngIf="enviado && (crearGrupos.invalid && !crearGrupos.get('integrantes')?.hasError('required'))">
       TODOS LOS CAMPOS SON OBLIGATORIOS
@@ -93,5 +93,6 @@
   </div>
 </div>
   <!-- Section: Design Block -->
-  <app-spinner *ngIf="loading"></app-spinner>
+  <app-spinner *ngIf="loading" class="centrar-spinner"></app-spinner>
 </div>
+<app-footer></app-footer>

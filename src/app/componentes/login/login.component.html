@@ -1,20 +1,21 @@
-<nav class="navbar navbar-dark bg-secondary">
+<nav class="navbar navbar-success bg-success">
   <div class="container">
     <a class="navbar-brand mr-4" routerLink="/inicio">
       <img src="../../../assets/img/logo.png" width="150px" height="80px" class="d-inline-block align-top" alt="Logo">
     </a>
     <div class="ml-auto">
-      <a class="btn btn-primary mr-4"  style="width: 100px; height: 35px;" routerLink="/inicio" >Inicio</a>
+      <a class="btn btn-secondary mr-4" style="width: 100px; height: 35px;" routerLink="/inicio">Inicio</a>
 
     </div>
   </div>
 </nav>
 
 
+
 <div class="wrapper">
   <section class=" text-center text-lg-start">
     <div *ngIf="!loading" class="card mb-3">
-      <div class="bg-success col-lg-12 rounded-t-5 px-md-5 py-2">
+      <div class="bg-secondary col-lg-12 rounded-t-5 px-md-5 py-2">
         <h2 class="text-white text-center">YAVI AGENDA PRO</h2>
       </div>
 
@@ -72,3 +73,4 @@
   </section>
   <app-spinner *ngIf="loading"></app-spinner>
 </div>
+<app-footer></app-footer>

@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { GruposService } from 'src/app/servicios/grupos.service';
+import { TemaService } from 'src/app/servicios/tema.service';
 
 @Component({
   selector: 'app-lista-grupos',
@@ -12,16 +13,22 @@ import { GruposService } from 'src/app/servicios/grupos.service';
 export class ListaGruposComponent implements OnInit {
   
   grupos: any[] = [];
-
+  isDarkTheme: boolean = false;
+  isLightTheme: boolean = true;
+  
   constructor(private _gruposService: GruposService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private temaService: TemaService) {
     
   }
 
   ngOnInit(): void {
-    this.getGrupos()
+    this.getGrupos();
+    this.temaService.isDarkTheme.subscribe((darkTheme: boolean) => {
+      this.isDarkTheme = darkTheme;
+      this.isLightTheme = !darkTheme;
+    });
   }
-
   getGrupos(){
     this._gruposService.ConsultaGrupos().subscribe(data =>{
       this.grupos = [];

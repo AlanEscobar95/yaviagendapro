@@ -1,3 +1,29 @@
+
+:host {
+  display: block;
+
+}
+
+
+.dark-theme {
+  color: white; 
+  background-color: #333;
+  height: 100%;
+}
+
+.light-theme {
+  color: black; 
+  background-color: white;
+  height: 100%;
+}
+.fondo-card{
+  background-image: url('../../../assets/img/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+}
+
 .correos-container {
   display: flex;
   flex-wrap: wrap;
@@ -24,24 +50,15 @@
   border: none;
   background: none;
 }
-.wrapper {
-  background-image: url('../../../assets/img/fondo.jpg'); /* Reemplaza 'ruta-de-tu-imagen-de-fondo.jpg' con la ruta correcta de tu imagen */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh; /* Ajusta la altura según sea necesario */
-}
-.card {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px; 
-  width: 100%;
-  padding: 20px;
-  margin: 20px;
-}
+
 
 .card-body {
   text-align: center; 
 }
 
+.centrar-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

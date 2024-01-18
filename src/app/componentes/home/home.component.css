@@ -1,4 +1,18 @@
-/*ESTILOS PROTOTIPO IMPRENTA*/
+/* Estilos por defecto o tema claro */
+body {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .dark-theme {
+    /* Estilos para el tema oscuro */
+    background-color: #333;
+    color: #fff;
+  }
+  
+ 
+  
+  /*ESTILOS PROTOTIPO IMPRENTA*/
 * {
     margin: 0px;
     padding: 0px;

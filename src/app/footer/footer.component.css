@@ -1,0 +1,21 @@
+
+footer{
+    background-color: #3B3B3B ;
+    color: white;
+  }
+  footer ul{
+    padding:0;
+  }
+  footer li{
+    list-style: none;
+  }
+  .wrap-footer{
+    display: grid;
+    grid-template-columns: 60% 30% 0% 0%;
+    column-gap: 5%;
+    padding: 1rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+    margin-top: 0;
+
+  }

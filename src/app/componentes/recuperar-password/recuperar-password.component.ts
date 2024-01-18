@@ -8,6 +8,8 @@ import { FirebaseErrorService } from 'src/app/servicios/firebase-error.service';
 @Component({
   selector: 'app-recuperar-password',
   templateUrl: './recuperar-password.component.html',
+  styleUrls: ['./recuperar-password.component.css']
+
 })
 export class RecuperarPasswordComponent implements OnInit {
   recuperarUsuario: FormGroup;
