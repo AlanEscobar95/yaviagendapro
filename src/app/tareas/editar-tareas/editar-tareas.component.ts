@@ -25,7 +25,6 @@ export class EditarTareasComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _tareasService: TareasService,
-    private _gruposService: GruposService,
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -34,7 +33,7 @@ export class EditarTareasComponent implements OnInit {
     this.editarTareas = this.fb.group({
       nombre: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('^[a-zA-Z ]*$')]],
       descripcion: ['', [Validators.required, Validators.maxLength(255)]],
-      integrantes: ['', [Validators.required, Validators.email]],
+      integrantes: ['', [Validators.email]],
       fechaInicio: ['', [Validators.required, this.fechaInicioValidator.bind(this)]],
       fechaFin: ['', [Validators.required, this.fechaFinValidator.bind(this)]],
       estado: ['', [Validators.required]],
@@ -55,37 +54,9 @@ export class EditarTareasComponent implements OnInit {
       this.cargarInformacionTarea();
     });
 
-    this.obtenerGrupos();
     this.verificarIntegrantes();
   }
 
-  obtenerGrupos() {
-    this.listaGrupos = [];
-    this.listaIntegrantes = [];
-  
-    this._gruposService.ConsultaGrupos().subscribe(grupos => {
-      const integrantesSet = new Set<string>();
-  
-      grupos.forEach((grupo: any) => {
-        const id = grupo.payload.doc.id;
-        const data = grupo.payload.doc.data();
-  
-        this._gruposService.obtenerIntegrantesDeGrupo(id).subscribe(integrantes => {
-          integrantes.forEach((integrante: string) => {
-            if (!this.correosIntegrantes.includes(integrante)) {
-              integrantesSet.add(integrante);
-            }
-          });
-  
-          const grupoConIntegrantes = { id, ...data, integrantes: Array.from(integrantesSet) };
-          this.listaGrupos.push(grupoConIntegrantes);
-        });
-  
-        this.listaIntegrantes = Array.from(integrantesSet);
-      });
-    });
-  }
-  
 
   cargarInformacionTarea() {
     this._tareasService.getTareas().subscribe(tareas => {
@@ -96,7 +67,6 @@ export class EditarTareasComponent implements OnInit {
         this.editarTareas.patchValue({
           nombre: tarea.nombre,
           descripcion: tarea.descripcion,
-          integrantes: tarea.integrantes, 
           fechaInicio: tarea.fechaInicio,
           fechaFin: tarea.fechaFin,
           estado: tarea.estado,
@@ -176,26 +146,26 @@ export class EditarTareasComponent implements OnInit {
 
   agregarIntegrante() {
     const integrantesControl = this.editarTareas.get('integrantes');
+  
     if (integrantesControl && integrantesControl.valid && integrantesControl.value.trim() !== '') {
       const nuevoCorreo = integrantesControl.value;
       this.correosIntegrantes.push(nuevoCorreo);
       this.actualizarTextoVisualizar();
-
-      integrantesControl.markAsUntouched();
-
-      integrantesControl.setValue('');
-      integrantesControl.setErrors(null);
+      integrantesControl.setValue(''); // Limpiar el control después de agregar
+      this.verificarIntegrantes(); // Actualizar la verificación de integrantes
     } else {
       this.toastr.error('Debe ingresar un correo electrónico válido', 'Error');
     }
-    this.verificarIntegrantes();
   }
+  
+  
 
   eliminarCorreo(correo: string) {
     this.correosIntegrantes = this.correosIntegrantes.filter(c => c !== correo);
     this.actualizarTextoVisualizar();
     this.verificarIntegrantes();
   }
+  
 
   actualizarTextoVisualizar() {
     const textoVisualizar = this.correosIntegrantes.join('\n');
@@ -203,23 +173,10 @@ export class EditarTareasComponent implements OnInit {
   }
 
   verificarIntegrantes() {
-    const integrantesControl = this.editarTareas.get('integrantes');
     const enviarButton = this.editarTareas.get('enviarButton');
-
-    if (integrantesControl && enviarButton) {
-      const integrantesNoVacios = integrantesControl.value.trim() !== '';
-      enviarButton[integrantesNoVacios ? 'enable' : 'disable']();
+    if (enviarButton) {
+      enviarButton[this.correosIntegrantes.length > 0 ? 'enable' : 'disable']();
     }
   }
-
-  cargarIntegrantes() {
-    const idGrupo = this.editarTareas.value.idGrupo;
-    if (idGrupo) {
-      this._gruposService.obtenerIntegrantesDeGrupo(idGrupo).subscribe(integrantes => {
-        this.listaIntegrantes = integrantes ? [...integrantes] : [];
-      });
-    } else {
-      this.listaIntegrantes = [];
-    }
-  }
+  
 }

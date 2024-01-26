@@ -4,126 +4,109 @@
 
   <div *ngIf="!loading" class="card fondo-card mx-auto col-lg-6"> 
     <div class="card-body">
-            <h1>Editar Tareas</h1>
-            <span *ngIf="enviado && (editarTareas.get('integrantes')?.invalid && !editarTareas.get('integrantes')?.hasError('required'))">
-      TODOS LOS CAMPOS SON OBLIGATORIOS
-    </span>
-    <form [formGroup]="editarTareas" (ngSubmit)="agregarEditarTareas()">
-      <div class="form-floating mb-3">
-        <input type="nombre" class="form-control" formControlName="nombre" placeholder="Ejm: Realizar un Crud">
-        <label>Nombre de la Tarea</label>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('nombre')?.hasError('required') && editarTareas.get('nombre')?.touched">
-          El <strong>nombre de la tarea</strong> es obligatorio.
-        </span>
-      </div>
+      <h1>Editar Tareas</h1>
+      <span *ngIf="enviado && (editarTareas.get('integrantes')?.invalid && !editarTareas.get('integrantes')?.hasError('required'))">
+        TODOS LOS CAMPOS SON OBLIGATORIOS
+      </span>
+      <form [formGroup]="editarTareas" (ngSubmit)="agregarEditarTareas()">
+        <div class="form-floating mb-3">
+          <input type="nombre" class="form-control" formControlName="nombre" placeholder="Ejm: Realizar un Crud">
+          <label>Nombre de la Tarea</label>
+          <span class="text-danger errorLabel"
+            *ngIf="editarTareas.get('nombre')?.hasError('required') && editarTareas.get('nombre')?.touched">
+            El <strong>nombre de la tarea</strong> es obligatorio.
+          </span>
+        </div>
 
-      <div class="form-floating mb-3">
-        <input type="descripcion" class="form-control" formControlName="descripcion" placeholder="Ejm: Crear una crud de empleados">
-        <label>Descripción</label>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('descripcion')?.hasError('required') && editarTareas.get('descripcion')?.touched">
-          La <strong>descripcion</strong> es obligatoria.
-        </span>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('descripcion')?.hasError('maxlength') && editarTareas.get('descripcion')?.touched">
-          La <strong>descripcion</strong> no puede tener más de 255 caracteres.
-        </span>
-      </div>
+        <div class="form-floating mb-3">
+          <input type="descripcion" class="form-control" formControlName="descripcion" placeholder="Ejm: Crear una crud de empleados">
+          <label>Descripción</label>
+          <span class="text-danger errorLabel"
+            *ngIf="editarTareas.get('descripcion')?.hasError('required') && editarTareas.get('descripcion')?.touched">
+            La <strong>descripcion</strong> es obligatoria.
+          </span>
+          <span class="text-danger errorLabel"
+            *ngIf="editarTareas.get('descripcion')?.hasError('maxlength') && editarTareas.get('descripcion')?.touched">
+            La <strong>descripcion</strong> no puede tener más de 255 caracteres.
+          </span>
+        </div>
 
-      <div class="d-flex justify-content-start mb-3">
-        <button type="button" class="btn btn-primary" (click)="agregarIntegrante()">Agregar Integrante</button>
-      </div>
-      
-      <div class="form-floating mb-3">
-        <select class="form-select" formControlName="integrantes">
-          <option value="" disabled selected>Selecciona un integrante</option>
-          <ng-container *ngFor="let grupo of listaGrupos">
-            <ng-container *ngFor="let integrante of grupo.integrantes">
-              <option [value]="integrante">{{ integrante }}</option>
-            </ng-container>
-          </ng-container>
-        </select>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('integrantes')?.hasError('required') && editarTareas.get('integrantes')?.touched">
-          Debe seleccionar un <strong>integrante</strong>.
-        </span>
-      </div>
+        <div class="d-flex justify-content-start mb-3">
+          <button type="button" class="btn btn-primary" (click)="agregarIntegrante()">Agregar Correo</button>
+        </div>
 
-      <div class="form-floating mb-3" *ngIf="listaIntegrantes.length > 0">
-        <label>Integrante del grupo</label>
-        <select class="form-select" formControlName="integrantes">
-          <option value="" disabled selected>Selecciona un integrante</option>
-          <option *ngFor="let integrante of listaIntegrantes" [value]="integrante">{{ integrante }}</option>
-        </select>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('integrantes')?.hasError('required') && editarTareas.get('integrantes')?.touched">
-          Debe seleccionar un <strong>integrante</strong>.
-        </span>
-      </div>
-
-      <div class="form-floating mb-3">
-        <div class="correos-container">
-          <div *ngFor="let correo of correosIntegrantes" class="correo-etiqueta">
-            <span>{{ correo }}</span>
-            <button type="button" class="btn btn-link" (click)="eliminarCorreo(correo)">x</button>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" formControlName="integrantes"
+            placeholder="Escribe los correos de los integrantes aquí">
+          <label>Agregar Nuevo Integrante</label>
+          <span class="text-danger errorLabel"
+            *ngIf="editarTareas.get('integrantes')?.hasError('email') && editarTareas.get('integrantes')?.touched">
+            Debe ingresar un correo electrónico válido.
+          </span>
+        </div>
+        
+        <div class="form-floating mb-3">
+          <div class="correos-container">
+            <div *ngFor="let correo of correosIntegrantes" class="correo-etiqueta">
+              <span>{{ correo }}</span>
+              <button type="button" class="btn btn-link" (click)="eliminarCorreo(correo)">x</button>
+            </div>
           </div>
         </div>
-      </div>
+        
 
-      <div class="form-floating mb-3">
-        <input type="date" class="form-control" formControlName="fechaInicio" placeholder="Fecha de inicio">
-        <label>Fecha de inicio de la Tarea</label>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('fechaInicio')?.hasError('required') && editarTareas.get('fechaInicio')?.touched">
-          La <strong>fecha de inicio</strong> es obligatoria.
-        </span>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('fechaInicio')?.hasError('fechaInvalida') && editarTareas.get('fechaInicio')?.touched">
-          La <strong>fecha de inicio</strong> no puede ser menor a la actual.
-        </span>
-      </div>
+        <div class="form-floating mb-3">
+          <input type="date" class="form-control" formControlName="fechaInicio" placeholder="Fecha de inicio">
+          <label>Fecha de inicio de la Tarea</label>
+          <span class="text-danger errorLabel"
+            *ngIf="editarTareas.get('fechaInicio')?.hasError('required') && editarTareas.get('fechaInicio')?.touched">
+            La <strong>fecha de inicio</strong> es obligatoria.
+          </span>
+          <span class="text-danger errorLabel"
+            *ngIf="editarTareas.get('fechaInicio')?.hasError('fechaInvalida') && editarTareas.get('fechaInicio')?.touched">
+            La <strong>fecha de inicio</strong> no puede ser menor a la actual.
+          </span>
+        </div>
+        
+        <div class="form-floating mb-3">
+          <input type="date" class="form-control" formControlName="fechaFin" placeholder="Fecha de fin">
+          <label>Fecha de finalización</label>
+          <span class="text-danger errorLabel"
+            *ngIf="editarTareas.get('fechaFin')?.hasError('required') && editarTareas.get('fechaFin')?.touched">
+            La <strong>fecha de finalización</strong> es obligatoria.
+          </span>
+          <span class="text-danger errorLabel"
+            *ngIf="editarTareas.get('fechaFin')?.hasError('fechaInvalida') && editarTareas.get('fechaFin')?.touched">
+            La <strong>fecha de finalización</strong> no puede ser menor a la actual.
+          </span>
+          <span class="text-danger errorLabel"
+            *ngIf="editarTareas.get('fechaFin')?.hasError('fechaFinMenorQueInicio') && editarTareas.get('fechaFin')?.touched">
+            La <strong>fecha de finalización</strong> no puede ser menor que la fecha de inicio.
+          </span>
+        </div>
+
+        <div class="form-floating mb-3">
+          <select class="form-select" formControlName="estado">
+            <option value="" disabled selected>Selecciona una estado</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Trabajo en Progreso">Trabajo en Progreso</option>
+            <option value="Completada">Completada</option>
+          </select>
+          <span class="text-danger errorLabel" *ngIf="editarTareas.get('prioridad')?.hasError('required') && editarTareas.get('prioridad')?.touched">
+            El <strong>estado</strong> es obligatorio.
+          </span>
+        </div>
+
       
-      <div class="form-floating mb-3">
-        <input type="date" class="form-control" formControlName="fechaFin" placeholder="Fecha de fin">
-        <label>Fecha de finalización</label>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('fechaFin')?.hasError('required') && editarTareas.get('fechaFin')?.touched">
-          La <strong>fecha de finalización</strong> es obligatoria.
-        </span>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('fechaFin')?.hasError('fechaInvalida') && editarTareas.get('fechaFin')?.touched">
-          La <strong>fecha de finalización</strong> no puede ser menor a la actual.
-        </span>
-        <span class="text-danger errorLabel"
-          *ngIf="editarTareas.get('fechaFin')?.hasError('fechaFinMenorQueInicio') && editarTareas.get('fechaFin')?.touched">
-          La <strong>fecha de finalización</strong> no puede ser menor que la fecha de inicio.
-        </span>
-      </div>
-
-      <div class="form-floating mb-3">
-        <select class="form-select" formControlName="estado">
-          <option value="" disabled selected>Selecciona una estado</option>
-          <option value="Pendiente">Pendiente</option>
-          <option value="Trabajo en Progreso">Trabajo en Progreso</option>
-          <option value="Completada">Completada</option>
-        </select>
-        <span class="text-danger errorLabel" *ngIf="editarTareas.get('prioridad')?.hasError('required') && editarTareas.get('prioridad')?.touched">
-          El <strong>estado</strong> es obligatorio.
-        </span>
-      </div>
-
-      <!-- Botones Volver y Enviar -->
-      <div class="d-flex justify-content-between mt-3">
-        <button class="btn btn-danger" routerLink="/calendario">Volver</button>
-        <button type="submit" class="btn btn-success" formControlName="enviarButton" [disabled]="editarTareas.invalid">Editar</button>
-      </div>
-    </form>
+        <div class="d-flex justify-content-between mt-3">
+          <button class="btn btn-danger" routerLink="/calendario">Volver</button>
+          <button type="submit" class="btn btn-success" formControlName="enviarButton" [disabled]="editarTareas.invalid">Editar</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-  <!-- Section: Design Block -->
-  <app-spinner *ngIf="loading" class="centrar-spinner"></app-spinner>
-</div>
+
+ <app-spinner *ngIf="loading" class="centrar-spinner"></app-spinner>
 <br>
 <app-footer></app-footer>
-

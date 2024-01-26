@@ -32,21 +32,16 @@
       </div>
 
       <div class="d-flex justify-content-start mb-3">
-        <button type="button" class="btn btn-primary" (click)="agregarIntegrante()">Agregar Integrante</button>
+        <button type="button" class="btn btn-primary" (click)="agregarIntegrante()">Agregar Correo</button>
       </div>
-      
+
       <div class="form-floating mb-3">
-        <select class="form-select" formControlName="integrantes">
-          <option value="" disabled selected>Selecciona un integrante</option>
-          <ng-container *ngFor="let grupo of listaGrupos">
-            <ng-container *ngFor="let integrante of grupo.integrantes">
-              <option [value]="integrante">{{ integrante }}</option>
-            </ng-container>
-          </ng-container>
-        </select>
+        <input type="email" class="form-control" formControlName="integrantes"
+          placeholder="Escribe los correos de los integrantes aquí">
+        <label>Integrantes del grupo</label>
         <span class="text-danger errorLabel"
-          *ngIf="crearTareas.get('integrantes')?.hasError('required') && crearTareas.get('integrantes')?.touched">
-          Debe seleccionar un <strong>integrante</strong>.
+          *ngIf="crearTareas.get('integrantes')?.hasError('required') && crearTareas.get('integrantes')?.touched && !crearTareas.get('integrantes')?.value.trim()">
+          Debe <strong>existir al menos </strong> un integrante.
         </span>
       </div>
 

@@ -3,8 +3,10 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GruposService } from 'src/app/servicios/grupos.service';
+import { NotificarTareasService } from 'src/app/servicios/notificar-tareas.service';
 import { TareasService } from 'src/app/servicios/tareas.service';
 import { TemaService } from 'src/app/servicios/tema.service';
+
 
 @Component({
   selector: 'app-crear-tareas',
@@ -24,7 +26,7 @@ export class CrearTareasComponent {
   constructor(
     private fb: FormBuilder,
     private _tareasService: TareasService,
-    private _gruposService: GruposService,
+    private _notificarTareasService: NotificarTareasService,
     private router: Router,
     private toastr: ToastrService,
     private temaService: TemaService
@@ -45,37 +47,11 @@ export class CrearTareasComponent {
   }
 
   ngOnInit(): void {
-    this.obtenerGrupos();
-    this.verificarIntegrantes();
     this.temaService.isDarkTheme.subscribe((darkTheme: boolean) => {
       this.isDarkTheme = darkTheme;
       this.isLightTheme = !darkTheme;
     });
-  }
-
-  obtenerGrupos() {
-    this.listaGrupos = [];
-    this.listaIntegrantes = [];
-  
-    this._gruposService.ConsultaGrupos().subscribe(grupos => {
-      const integrantesSet = new Set<string>();
-  
-      grupos.forEach((grupo: any) => {
-        const id = grupo.payload.doc.id;
-        const data = grupo.payload.doc.data();
-  
-        this._gruposService.obtenerIntegrantesDeGrupo(id).subscribe(integrantes => {
-          integrantes.forEach((integrante: string) => {
-            integrantesSet.add(integrante);
-          });
-  
-          const grupoConIntegrantes = { id, ...data, integrantes };
-          this.listaGrupos.push(grupoConIntegrantes);
-        });
-  
-        this.listaIntegrantes = Array.from(integrantesSet);
-      });
-    });
+    this.verificarIntegrantes();
   }
   
 
@@ -126,9 +102,9 @@ export class CrearTareasComponent {
       prioridad: this.crearTareas.value.prioridad,
       estado: this.crearTareas.value.estado,
     };
-
+  
     this.loading = true;
-
+  
     this._tareasService.registrarTarea(tarea)
       .then(() => {
         this.toastr.success('Tarea registrada con éxito');
@@ -140,6 +116,7 @@ export class CrearTareasComponent {
         this.loading = false;
       });
   }
+  
 
   agregarIntegrante() {
     const integrantesControl = this.crearTareas.get('integrantes');
@@ -147,16 +124,19 @@ export class CrearTareasComponent {
       const nuevoCorreo = integrantesControl.value;
       this.correosIntegrantes.push(nuevoCorreo);
       this.actualizarTextoVisualizar();
-
       integrantesControl.markAsUntouched();
 
       integrantesControl.setValue('');
       integrantesControl.setErrors(null);
+
+      const mensajeCorreo = `¡Hola ${nuevoCorreo}!\nHas sido agregado al grupo.`;
+      this._notificarTareasService.enviarCorreo(nuevoCorreo, 'Bienvenido al Grupo', mensajeCorreo);
     } else {
       this.toastr.error('Debe ingresar un correo electrónico válido', 'Error');
     }
     this.verificarIntegrantes();
   }
+
 
   eliminarCorreo(correo: string) {
     this.correosIntegrantes = this.correosIntegrantes.filter(c => c !== correo);
@@ -176,17 +156,6 @@ export class CrearTareasComponent {
     if (integrantesControl && enviarButton) {
       const integrantesNoVacios = integrantesControl.value.trim() !== '';
       enviarButton[integrantesNoVacios ? 'enable' : 'disable']();
-    }
-  }
-
-  cargarIntegrantes() {
-    const idGrupo = this.crearTareas.value.idGrupo;
-    if (idGrupo) {
-      this._gruposService.obtenerIntegrantesDeGrupo(idGrupo).subscribe(integrantes => {
-        this.listaIntegrantes = integrantes ? [...integrantes] : [];
-      });
-    } else {
-      this.listaIntegrantes = [];
     }
   }
 }

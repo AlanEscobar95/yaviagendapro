@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CorreoService } from 'src/app/servicios/correo.service';
+
 import { GruposService } from 'src/app/servicios/grupos.service';
 import { TemaService } from 'src/app/servicios/tema.service';
 
@@ -25,6 +27,7 @@ export class CrearGruposComponent implements OnInit {
     private fb: FormBuilder,
     private _gruposService: GruposService,
     private _temaService: TemaService,
+    private _correoService: CorreoService,
     private router: Router,
     private toastr: ToastrService,
     private aRoute: ActivatedRoute
@@ -165,25 +168,24 @@ export class CrearGruposComponent implements OnInit {
   }
   
 
-    agregarCorreo() {
-      const integrantesControl = this.crearGrupos.get('integrantes');
-      if (integrantesControl && integrantesControl.valid && integrantesControl.value.trim() !== '') {
-        const nuevoCorreo = integrantesControl.value;
-        this.correosIntegrantes.push(nuevoCorreo);
-        this.actualizarTextoVisualizar();
-        
-        // Establecer el campo como no tocado
-        integrantesControl.markAsUntouched();
-    
-        // Limpiar el valor
-        integrantesControl.setValue('');
-        integrantesControl.setErrors(null);
-      } else {
-        this.toastr.error('Debe ingresar un correo electrónico válido', 'Error');
-      }
-      this.verificarIntegrantes();
-    }    
+  agregarCorreo() {
+    const integrantesControl = this.crearGrupos.get('integrantes');
+    if (integrantesControl && integrantesControl.valid && integrantesControl.value.trim() !== '') {
+      const nuevoCorreo = integrantesControl.value;
+      this.correosIntegrantes.push(nuevoCorreo);
+      this.actualizarTextoVisualizar();
+      integrantesControl.markAsUntouched();
 
+      integrantesControl.setValue('');
+      integrantesControl.setErrors(null);
+
+      const mensajeCorreo = `¡Hola ${nuevoCorreo}!\nHas sido agregado al grupo.`;
+      this._correoService.enviarCorreo(nuevoCorreo, 'Bienvenido al Grupo', mensajeCorreo);
+    } else {
+      this.toastr.error('Debe ingresar un correo electrónico válido', 'Error');
+    }
+    this.verificarIntegrantes();
+  }
 
   eliminarCorreo(correo: string) {
     this.correosIntegrantes = this.correosIntegrantes.filter(c => c !== correo);
