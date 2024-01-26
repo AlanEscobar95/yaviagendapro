@@ -1,0 +1,17 @@
+@media screen and (max-width: 768px) {
+    .navbar-nav {
+        flex-direction: column;
+    }
+
+    .navbar-nav a,
+    .navbar-nav a:link,
+    .navbar-nav a:visited {
+      color: white; 
+    }
+    
+    .navbar-nav a.active,
+    .navbar-nav a:hover {
+      background-color: white; 
+      color: #333; 
+    }
+}

@@ -1,29 +1,25 @@
-
-<!-- navbar.component.html -->
-<nav class="navbar navbar-expand-lg bg-success"  [ngClass]="{'dark-theme': isDarkTheme, 'light-theme': !isDarkTheme}">
+<nav class="navbar navbar-expand-lg bg-success" [ngClass]="{'dark-theme': isDarkTheme, 'light-theme': !isDarkTheme}">
   <div class="container-fluid">
-    <a class="navbar-brand mr-4" href="#" style="margin-left: 100px;">
+    <a class="navbar-brand mr-4" routerLink="/home" style="margin-left: 100px;">
       <img src="../../assets/img/LogoAgenda.png" width="100px" height="100px" class="d-inline-block align-top" alt="Logo">
     </a>
     
-    <a class="navbar-brand" routerLink="/home" >Home</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" routerLink="/home"><b>Home</b></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleMenu()">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngClass]="{'show': isMenuOpen}">
       <div class="navbar-nav">
-        <a class="nav-link" routerLink="/calendario">Calendario</a>
-        <a class="nav-link" routerLink="/lista-grupos">Grupos</a>
+        <a class="nav-link" routerLink="/lista-grupos" routerLinkActive="active"><b>Grupos</b></a>
+        <a class="nav-link" routerLink="/calendario" routerLinkActive="active"><b>Calendario</b></a>
       </div>
       <div class="col-md-8 text-end">
-        <button class="btn btn-successme-2" type="button" (click)="toggleTheme()">
-          <i class="fas fa-sun"></i> <!-- Ícono de sol -->
-          <i class="fas fa-moon"></i> <!-- Ícono de luna -->
+        <button class="btn btn-success me-2" type="button" (click)="toggleTheme()">
+          <i class="fas fa-sun"></i>
+          <i class="fas fa-moon"></i> 
         </button>
         <button class="btn btn-danger" type="button" (click)="logOut()">Cerrar Sesión</button>
-        
       </div>
     </div>
   </div>
 </nav>
-

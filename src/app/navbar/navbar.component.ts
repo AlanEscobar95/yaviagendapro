@@ -11,6 +11,7 @@ import { TemaService } from '../servicios/tema.service';
 export class NavbarComponent implements OnInit {
   dataUser: any;
   isDarkTheme: boolean = false;
+  isMenuOpen = false;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -43,5 +44,10 @@ export class NavbarComponent implements OnInit {
   toggleTheme() {
     this.themeService.toggleDarkTheme();
     console.log("Cambiar Tema");
+  }
+  
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }
