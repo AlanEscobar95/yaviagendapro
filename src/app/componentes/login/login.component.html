@@ -31,7 +31,8 @@
                 INGRESAR CREDENCIALES
               </h3>
               <div class="form-floating mb-3">
-                <input type="email" class="form-control" formControlName="email" placeholder="name@example.com" maxlength="50">
+                <input type="email" class="form-control" formControlName="email" placeholder="name@example.com"
+                  maxlength="50">
                 <label>Correo electrónico</label>
                 <span class="text-danger errorLabel"
                   *ngIf="loginUsuario.get('email')?.hasError('required') && loginUsuario.get('email')?.touched">
@@ -42,24 +43,25 @@
                   El <strong>correo electrónico</strong> es invalido.
                 </span>
               </div>
-          
-<div class="form-floating mb-3 password-container">
-  <input type="{{ passwordVisible ? 'text' : 'password' }}" class="form-control" formControlName="password" placeholder="Password" maxlength="16">
-  <label>Contraseña</label>
-  <span class="eye-icon" (click)="togglePasswordVisibility()">
-    <i [class]="passwordVisible ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
-  </span>
-  <span class="text-danger errorLabel"
-    *ngIf="loginUsuario.get('password')?.hasError('required') && loginUsuario.get('password')?.touched">
-    La <strong>contraseña</strong> es requerida.
-  </span>
-  <span class="text-danger errorLabel"
-    *ngIf="loginUsuario.get('password')?.hasError('minlength') && loginUsuario.get('password')?.touched">
-    La <strong>contraseña</strong> debe contener al menos 8 caracteres.
-  </span>
-</div>
 
-              
+              <div class="form-floating mb-3 password-container">
+                <input type="{{ passwordVisible ? 'text' : 'password' }}" class="form-control"
+                  formControlName="password" placeholder="Password" maxlength="16">
+                <label>Contraseña</label>
+                <span class="eye-icon" (click)="togglePasswordVisibility()">
+                  <i [class]="passwordVisible ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+                </span>
+                <span class="text-danger errorLabel"
+                  *ngIf="loginUsuario.get('password')?.hasError('required') && loginUsuario.get('password')?.touched">
+                  La <strong>contraseña</strong> es requerida.
+                </span>
+                <span class="text-danger errorLabel"
+                  *ngIf="loginUsuario.get('password')?.hasError('minlength') && loginUsuario.get('password')?.touched">
+                  La <strong>contraseña</strong> debe contener al menos 8 caracteres.
+                </span>
+              </div>
+
+
               <p class="mt-3">No tienes cuenta? <a routerLink="/registro">Registrarse</a></p>
               <div class="d-grid gap-2">
                 <button class="btn btn-success btn-lg" type="submit">Ingresar</button>
